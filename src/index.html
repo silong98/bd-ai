@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>北斗互联 — 构建云端服务生态，赋能全球电商企业</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+  /* ─── RESET & BASE ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans SC', 'DM Sans', sans-serif;
+    background: #FFFFFF;
+    color: #1a0e2e;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── CSS VARIABLES ─── */
+  :root {
+    --brand:      #2F0463;
+    --brand-mid:  #4a0c90;
+    --brand-soft: #7B3FBF;
+    --accent:     #E8472B;
+    --accent2:    #F5A623;
+    --bg:         #F9F9FB;
+    --bg-card:    #FFFFFF;
+    --bg-subtle:  #EDE8F5;
+    --text:       #1a0e2e;
+    --text-mid:   #4a3566;
+    --text-muted: #7a6898;
+    --border:     rgba(47,4,99,0.1);
+    --shadow-sm:  0 2px 12px rgba(47,4,99,0.08);
+    --shadow-md:  0 8px 32px rgba(47,4,99,0.12);
+    --shadow-lg:  0 20px 60px rgba(47,4,99,0.15);
+    --safe:       1600px;
+    --pad:        clamp(20px, 5vw, 80px);
+    --radius:     16px;
+    --radius-lg:  28px;
+  }
+
+  /* ─── SAFE CONTAINER ─── */
+  .wrap {
+    width: 100%;
+    max-width: var(--safe);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--brand-soft); border-radius: 3px; }
+
+  /* ─── NAVBAR ─── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  #navbar.scrolled { box-shadow: var(--shadow-md); }
+  .nav-inner {
+    max-width: var(--safe); margin: 0 auto; padding: 0 var(--pad);
+    height: 76px; display: flex; align-items: center; gap: 48px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .nav-logo svg { height: 36px; width: auto; }
+  .nav-links { display: flex; gap: 36px; flex: 1; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-mid); font-size: 15px; font-weight: 500;
+    position: relative; padding: 4px 0; transition: color .2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+    background: var(--brand); transition: width .25s cubic-bezier(.4,0,.2,1);
+    border-radius: 2px;
+  }
+  .nav-links a:hover { color: var(--brand); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--brand); }
+  .nav-links a.active::after { width: 100%; }
+  .nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+  /* ── LANGUAGE TOGGLE PILL ────────────────────────────── */
+  .lang-toggle {
+    display: inline-flex; align-items: center;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 3px;
+    gap: 0;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  .lang-toggle-opt {
+    position: relative; z-index: 1;
+    padding: 4px 11px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted);
+    border-radius: 16px;
+    transition: color 0.22s ease;
+    letter-spacing: 0.3px;
+    line-height: 1;
+  }
+  .lang-toggle-opt.active {
+    color: #fff;
+  }
+  .lang-toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    height: calc(100% - 6px);
+    border-radius: 16px;
+    background: var(--brand);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1), width 0.15s ease;
+    z-index: 0;
+    box-shadow: 0 2px 8px rgba(47,4,99,0.25);
+  }
+  .lang-toggle:hover .lang-toggle-thumb {
+    background: var(--brand-mid);
+  }
+
+  /* ─── HERO SECTION ─── */
+  #hero {
+    padding-top: 76px;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    background: linear-gradient(135deg, #FFFFFF 0%, #EAE2FF 35%, #DDF0FF 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-blob {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(47,4,99,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-bg-blob-1 { width: 700px; height: 700px; top: -100px; right: -200px; }
+  .hero-bg-blob-2 { width: 500px; height: 500px; bottom: -80px; left: -100px; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(47,4,99,0.08); border: 1px solid rgba(47,4,99,0.15);
+    border-radius: 99px; padding: 6px 16px; margin-bottom: 24px;
+    font-size: 13px; font-weight: 600; color: var(--brand); letter-spacing: .6px;
+  }
+  .hero-eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+  .hero-title {
+    font-size: clamp(36px, 3.5vw, 58px); font-weight: 700;
+    line-height: 1.25; color: var(--text); margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .hero-sub {
+    font-size: 17px; color: var(--text-mid); line-height: 1.8;
+    max-width: 540px; margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--brand); color: #fff; border-radius: 12px;
+    padding: 14px 32px; font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all .25s; letter-spacing: .3px;
+    box-shadow: 0 8px 28px rgba(47,4,99,0.3);
+  }
+  .btn-primary:hover { background: var(--brand-mid); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(47,4,99,0.4); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--brand);
+    border: 2px solid var(--brand); border-radius: 12px;
+    padding: 12px 28px; font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all .25s;
+  }
+  .btn-outline:hover { background: var(--brand); color: #fff; transform: translateY(-2px); }
+  .hero-visual { display: flex; justify-content: center; align-items: center; }
+  .hero-card-cluster { position: relative; width: 100%; max-width: 520px; margin: 0 auto; }
+  .hero-main-card {
+    background: var(--bg-card); border-radius: var(--radius-lg);
+    padding: 40px; box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+  }
+  .hero-main-card h3 { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .hero-main-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+  .stat-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .stat-box {
+    background: var(--bg-subtle); border-radius: 12px; padding: 18px;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .stat-box .num { font-size: 28px; font-weight: 700; color: var(--brand); letter-spacing: -1px; }
+  .stat-box .lbl { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+  .hero-float-badge {
+    position: absolute; right: -28px; top: 28px;
+    background: var(--brand); color: #fff; border-radius: 14px;
+    padding: 14px 20px; box-shadow: 0 8px 28px rgba(47,4,99,0.4);
+    font-size: 13px; font-weight: 600; text-align: center; min-width: 120px;
+    animation: float 3.5s ease-in-out infinite;
+  }
+  .hero-float-badge2 {
+    position: absolute; left: -24px; bottom: 36px;
+    background: #fff; color: var(--brand); border-radius: 14px;
+    padding: 14px 20px; box-shadow: var(--shadow-md);
+    border: 2px solid rgba(47,4,99,0.15);
+    font-size: 13px; font-weight: 600; min-width: 130px;
+    animation: float2 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+  /* ─── STATS STRIP ─── */
+  #stats {
+    background: var(--brand);
+    padding: 56px 0;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    text-align: center;
+  }
+  .stats-grid .stat-item {
+    padding: 24px 32px; position: relative;
+  }
+  .stats-grid .stat-item + .stat-item::before {
+    content: ''; position: absolute; left: 0; top: 25%; height: 50%;
+    width: 1px; background: rgba(255,255,255,0.25);
+  }
+  .stats-grid .stat-item .big {
+    font-size: clamp(40px, 3.5vw, 58px); font-weight: 700; color: #fff; line-height: 1;
+    letter-spacing: -2px;
+  }
+  .stats-grid .stat-item .big span { font-size: 0.55em; letter-spacing: 0; font-weight: 600; }
+  .stats-grid .stat-item .desc { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px; font-weight: 500; }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 100px 0; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; color: var(--brand);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-label::before { content: ''; width: 24px; height: 2px; background: var(--brand); border-radius: 2px; }
+  .section-title {
+    font-size: clamp(28px, 2.8vw, 44px); font-weight: 700;
+    color: var(--text); line-height: 1.25; letter-spacing: -0.5px;
+  }
+  .section-title em { font-style: normal; color: var(--brand); }
+  .section-sub {
+    font-size: 16px; color: var(--text-muted); line-height: 1.8; max-width: 600px;
+    margin-top: 16px;
+  }
+  .text-center { text-align: center; }
+  .text-center .section-sub { margin: 16px auto 0; }
+  .text-center .section-label { justify-content: center; }
+
+  /* ─── SUPPLY INTRO ─── */
+  #supply-intro { background: var(--bg-card); }
+  .supply-intro-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .supply-intro-text .title-lg {
+    font-size: clamp(30px, 2.8vw, 46px); font-weight: 700; color: var(--text);
+    line-height: 1.25; margin-bottom: 20px; letter-spacing: -0.5px;
+  }
+  .supply-intro-text .title-lg em { font-style: normal; color: var(--brand); }
+  .supply-intro-text p { font-size: 16px; color: var(--text-mid); line-height: 1.85; margin-bottom: 32px; }
+  .icon-list { display: grid; gap: 16px; margin-bottom: 36px; }
+  .icon-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--bg-subtle); border-radius: 12px; padding: 16px 18px;
+    border: 1px solid var(--border);
+  }
+  .icon-row .ico {
+    width: 36px; height: 36px; border-radius: 10px; background: var(--brand);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    font-size: 18px;
+  }
+  .icon-row strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 3px; }
+  .icon-row span { font-size: 13px; color: var(--text-muted); }
+  .supply-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .supply-visual-inner {
+    width: 100%; aspect-ratio: 1; max-width: 460px;
+    background: linear-gradient(145deg, #F5F0FC, #E4D5FF);
+    border-radius: var(--radius-lg); overflow: hidden; position: relative;
+    border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    padding: 40px;
+  }
+  .flow-step {
+    width: 100%; background: #fff; border-radius: 14px; padding: 18px 22px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; gap: 14px;
+    transition: transform .3s;
+  }
+  .flow-step:hover { transform: translateX(6px); }
+  .flow-step .step-num {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .flow-step strong { font-size: 14px; color: var(--text); }
+  .flow-step span { font-size: 12px; color: var(--text-muted); display: block; }
+  .flow-arrow { font-size: 20px; color: var(--brand-soft); opacity: .5; }
+
+  /* ─── SUPPLY CHAIN ADVANTAGE ─── */
+  #supply-advantage { background: var(--bg); }
+  .adv-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 56px; }
+  .adv-card {
+    background: var(--bg-card); border-radius: var(--radius); padding: 36px 30px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    transition: all .3s cubic-bezier(.4,0,.2,1); position: relative; overflow: hidden;
+  }
+  .adv-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--brand), var(--brand-soft));
+  }
+  .adv-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .adv-card .card-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    background: linear-gradient(135deg, #F3EEF9, #D8CEFF);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 20px;
+    border: 1px solid rgba(47,4,99,0.1);
+  }
+  .adv-card h4 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+  .adv-card p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+  /* ─── PARTNERS (商家合作) ─── */
+  #partners-connect { background: var(--bg-card); }
+  .partner-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 56px; }
+  .partner-box {
+    background: var(--bg-subtle); border-radius: var(--radius-lg); padding: 44px 40px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .partner-box::after {
+    content: attr(data-num);
+    position: absolute; top: -20px; right: -10px;
+    font-size: 120px; font-weight: 800; color: rgba(47,4,99,0.04);
+    line-height: 1; pointer-events: none; letter-spacing: -4px;
+  }
+  .partner-box .box-icon {
+    width: 56px; height: 56px; background: var(--brand); border-radius: 16px;
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+    margin-bottom: 20px; box-shadow: 0 8px 24px rgba(47,4,99,0.3);
+  }
+  .partner-box h3 { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+  .partner-box p { font-size: 14px; color: var(--text-mid); line-height: 1.85; }
+
+  /* ─── CAPABILITY & FREE ─── */
+  #capability-free { background: var(--brand); position: relative; overflow: hidden; }
+  #capability-free::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #capability-free::after {
+    content: ''; position: absolute; bottom: -150px; left: -150px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cap-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .cap-box {
+    position: relative;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    padding: 44px 48px;
+    transition: background .3s;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 0 52px;
+    align-items: start;
+  }
+  .cap-box:hover { background: rgba(255,255,255,0.11); }
+  .cap-box-lhs {
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding-right: 52px;
+  }
+  .cap-box .box-eyebrow {
+    font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cap-box .box-eyebrow::before {
+    content: ''; width: 20px; height: 2px; background: rgba(255,255,255,0.35); border-radius: 2px;
+  }
+  .cap-box .cap-box-icon {
+    width: 64px; height: 64px; border-radius: 18px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; margin-bottom: 24px;
+  }
+  .cap-box h3 { font-size: clamp(22px, 1.8vw, 30px); font-weight: 700; color: #fff; line-height: 1.3; }
+  .cap-box-rhs { padding-top: 4px; }
+  .cap-box p { font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 28px; }
+  .cap-feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cap-feat {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 13px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .cap-feat .chk {
+    width: 24px; height: 24px; border-radius: 7px; background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .cap-feat span { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+  /* ─── SIMPLE STEPS ─── */
+  #simple-steps { background: var(--bg); }
+  .steps-timeline { margin-top: 64px; position: relative; }
+  .steps-timeline::before {
+    content: ''; position: absolute; left: 50%; top: 36px; bottom: 36px;
+    width: 2px; background: linear-gradient(to bottom, var(--brand), rgba(47,4,99,0.1));
+    transform: translateX(-50%);
+  }
+  .step-row {
+    display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: center;
+    margin-bottom: 48px;
+  }
+  .step-row:last-child { margin-bottom: 0; }
+  .step-content-left { text-align: right; padding-right: 40px; }
+  .step-content-right { text-align: left; padding-left: 40px; }
+  .step-content-empty { }
+  .step-circle {
+    width: 72px; height: 72px; border-radius: 50%; background: var(--brand); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 700; margin: 0 auto;
+    box-shadow: 0 0 0 8px rgba(47,4,99,0.1), 0 8px 24px rgba(47,4,99,0.35);
+    position: relative; z-index: 1;
+  }
+  .step-content-left h4, .step-content-right h4 {
+    font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px;
+  }
+  .step-content-left p, .step-content-right p {
+    font-size: 14px; color: var(--text-muted); line-height: 1.75;
+  }
+
+  /* ─── ABOUT / COMPANY ─── */
+  #about { background: var(--bg-card); }
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: start; }
+  .about-text p { font-size: 15px; color: var(--text-mid); line-height: 1.9; margin-bottom: 20px; }
+  .mission-vision { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
+  .mv-box {
+    background: var(--bg-subtle); border-radius: 14px; padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .mv-box .mv-label {
+    font-size: 11px; font-weight: 700; color: var(--brand); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mv-box .mv-label::before { content:''; width: 16px; height: 2px; background: var(--brand); border-radius: 2px; }
+  .mv-box p { font-size: 14px; color: var(--text); font-weight: 600; line-height: 1.5; }
+  .platforms-cloud { margin-top: 0; }
+  .platforms-cloud h4 { font-size: 16px; font-weight: 700; color: var(--text-mid); margin-bottom: 20px; letter-spacing: .3px; }
+  .platform-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .platform-tag {
+    background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--brand);
+    transition: all .2s;
+  }
+  .platform-tag:hover { background: var(--brand); color: #fff; transform: scale(1.04); }
+  .about-values { margin-top: 36px; }
+  .about-values h4 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+  .value-list { display: grid; gap: 12px; }
+  .value-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--bg-subtle); border-radius: 12px; padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .value-item .vi-icon {
+    font-size: 20px; flex-shrink: 0;
+  }
+  .value-item strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 3px; }
+  .value-item span { font-size: 13px; color: var(--text-muted); }
+
+  /* ─── CONSULT / FORM ─── */
+  #consult { background: var(--bg); }
+  .consult-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .consult-left h2 { font-size: clamp(28px, 2.5vw, 40px); font-weight: 700; color: var(--text); margin-bottom: 16px; }
+  .consult-left p { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 32px; }
+  .identity-label { font-size: 13px; font-weight: 700; color: var(--text-mid); margin-bottom: 12px; letter-spacing: .5px; }
+  .identity-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    border: 2px solid var(--border); border-radius: 99px; padding: 8px 18px;
+    font-size: 13px; font-weight: 600; color: var(--text-mid); cursor: pointer;
+    transition: all .2s; background: var(--bg-card); user-select: none;
+  }
+  .chip.selected, .chip:hover { border-color: var(--brand); color: var(--brand); background: rgba(47,4,99,0.06); }
+  .form-box {
+    background: var(--bg-card); border-radius: var(--radius-lg); padding: 40px;
+    box-shadow: var(--shadow-md); border: 1px solid var(--border);
+  }
+  .form-box h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 24px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 13px; font-weight: 600; color: var(--text-mid); letter-spacing: .3px; }
+  .form-group input, .form-group select {
+    border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px;
+    font-size: 14px; color: var(--text); background: var(--bg);
+    font-family: inherit; outline: none; transition: border-color .2s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--brand); background: #fff; }
+  .form-group input::placeholder { color: var(--text-muted); }
+  .form-submit {
+    width: 100%; margin-top: 24px; background: var(--brand); color: #fff;
+    border: none; border-radius: 12px; padding: 15px; font-size: 15px;
+    font-weight: 700; cursor: pointer; font-family: inherit; letter-spacing: .5px;
+    transition: all .25s; box-shadow: 0 8px 28px rgba(47,4,99,0.3);
+  }
+  .form-submit:hover { background: var(--brand-mid); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(47,4,99,0.4); }
+
+  /* ─── PARTNER LOGOS ─── */
+  #partner-logos { background: var(--bg-card); padding: 80px 0; overflow: hidden; }
+  .logos-marquee-wrap {
+    position: relative; margin-top: 48px; overflow: hidden;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .logos-track {
+    display: flex; gap: 16px; width: max-content;
+    animation: marquee-scroll 28s linear infinite;
+  }
+  .logos-track:hover { animation-play-state: paused; }
+  @keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .logo-chip {
+    background: var(--bg-subtle); border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 12px 28px; font-size: 14px; font-weight: 700; color: var(--text-mid);
+    white-space: nowrap; flex-shrink: 0;
+    transition: border-color .25s, color .25s, background .25s, box-shadow .25s;
+    cursor: default;
+  }
+  .logo-chip:hover { border-color: var(--brand); color: var(--brand); background: rgba(47,4,99,0.06); box-shadow: var(--shadow-sm); }
+
+  /* ─── FOOTER ─── */
+  #footer {
+    background: linear-gradient(160deg, #1a0240 0%, var(--brand) 60%, #3a0870 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #footer::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% -20%, rgba(123,63,191,0.35) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  #footer::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 110%, rgba(47,4,99,0.4) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .footer-inner {
+    position: relative; z-index: 1;
+    padding: 52px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .footer-qr-center {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-qr-center img {
+    width: 96px; height: 96px; border-radius: 10px; display: block;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+  .footer-qr-center p {
+    font-size: 13px; color: rgba(255,255,255,0.65);
+    text-align: center; line-height: 1.6; margin: 0;
+  }
+  .footer-nav-row {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-nav-row a {
+    font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none;
+    font-weight: 500; padding: 4px 24px; transition: color .2s;
+  }
+  .footer-nav-row a:hover { color: #fff; }
+  .footer-nav-sep { color: rgba(255,255,255,0.2); font-size: 14px; }
+  .footer-info-row {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-info-row span, .footer-info-row a {
+    font-size: 13px; color: rgba(255,255,255,0.6); padding: 4px 16px;
+    text-decoration: none; transition: color .2s;
+  }
+  .footer-info-row a:hover { color: #fff; }
+  .footer-info-row .info-sep { color: rgba(255,255,255,0.2); padding: 0; }
+  .footer-links-inline { display: flex; align-items: center; gap: 2px; padding: 4px 16px; }
+  .footer-links-inline span { font-size: 13px; color: rgba(255,255,255,0.6); padding: 0; }
+  .footer-links-inline a {
+    font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none;
+    padding: 0 8px; transition: color .2s;
+  }
+  .footer-links-inline a:hover { color: #fff; }
+  .footer-copyright {
+    padding: 18px 0 24px; text-align: center; width: 100%;
+  }
+  .footer-copyright p {
+    font-size: 12px; color: rgba(255,255,255,0.35); margin: 0;
+  }
+
+  /* ─── FADE-IN ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1100px) {
+    .hero-grid, .supply-intro-grid, .about-grid, .consult-layout { grid-template-columns: 1fr; gap: 48px; }
+    .adv-cards { grid-template-columns: repeat(2,1fr); }
+    .partner-split { grid-template-columns: 1fr; gap: 28px; }
+    .cap-box { grid-template-columns: 1fr; gap: 24px; }
+    .cap-box-lhs { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-right: 0; padding-bottom: 24px; }
+    .cap-feature-list { grid-template-columns: 1fr; }
+    .footer-main { grid-template-columns: 1fr 1fr; gap: 40px 32px; }
+    .footer-cta-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .footer-qr { flex-direction: row; align-items: center; gap: 20px; }
+    .footer-qr-label { text-align: left; }
+    .steps-timeline::before { display: none; }
+    .step-row { grid-template-columns: 80px 1fr; }
+    .step-content-left { grid-column: 2; text-align: left; padding: 0 0 0 20px; }
+    .step-content-right { grid-column: 2; padding: 0 0 0 20px; }
+    .step-content-empty { display: none; }
+    .step-row:nth-child(even) .step-content-left { order: 0; }
+    .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .stats-grid .stat-item + .stat-item::before { display: none; }
+    .cap-box { padding: 32px 28px; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .adv-cards { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .mission-vision { grid-template-columns: 1fr; }
+    .footer-main { grid-template-columns: 1fr; gap: 0; }
+    .hero-float-badge, .hero-float-badge2 { display: none; }
+  }
+
+  /* ── HAMBURGER BUTTON ───────────────────────────────────── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer; padding: 6px;
+    margin-left: auto; flex-shrink: 0;
+    border-radius: 8px;
+    transition: background 0.2s;
+    z-index: 1001;
+  }
+  .nav-hamburger:hover { background: var(--bg-subtle); }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--brand); border-radius: 2px;
+    transition: transform 0.28s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU DRAWER ─────────────────────────────────── */
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0 20px;
+    z-index: 1000;
+    box-shadow: 0 12px 40px rgba(47,4,99,0.13);
+    flex-direction: column;
+  }
+  .nav-mobile-menu.open { display: flex; }
+  .nav-mobile-menu a {
+    display: block;
+    padding: 14px 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .nav-mobile-menu a:hover { background: var(--bg-subtle); color: var(--brand); border-left-color: rgba(47,4,99,0.3); }
+  .nav-mobile-menu a.active { background: var(--bg-subtle); color: var(--brand); border-left-color: var(--brand); font-weight: 700; }
+
+  /* ── RESPONSIVE BREAKPOINTS ─────────────────────────────── */
+
+  /* Tablet / small desktop */
+  @media (max-width: 900px) {
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 13px; }
+    .lang-toggle { padding: 2px; } .lang-toggle-opt { padding: 3px 9px; font-size: 11px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+
+    /* ── NAV ── */
+    .nav-links { display: none !important; }
+    .nav-right  { display: flex; margin-left: 0; }
+    .nav-hamburger { display: flex; }
+    .nav-inner { height: 64px; gap: 12px; padding: 0 20px; }
+
+    /* ── HERO ── */
+    #hero { min-height: auto; padding-top: 80px; padding-bottom: 56px; align-items: flex-start; }
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-eyebrow { font-size: 11px; }
+    .hero-title { font-size: clamp(28px, 8vw, 42px); margin-bottom: 16px; }
+    .hero-sub { font-size: 15px; margin-bottom: 28px; max-width: 100%; }
+    .hero-actions { flex-direction: column; gap: 12px; align-items: stretch; }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-outline { width: 100%; justify-content: center; padding: 14px 20px; font-size: 15px; }
+    .hero-visual { display: flex; margin-top: 8px; }
+    .hero-visual svg,
+    .hero-visual > * { width: 100%; max-width: 480px; height: auto; margin: 0 auto; }
+    .hero-float-badge, .hero-float-badge2 { display: none; }
+    .hero-bg-blob { opacity: 0.4; }
+
+    /* ── STATS BAR ── */
+    #stats { padding: 36px 0; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+    .stats-grid .stat-item { padding: 18px 12px; }
+    .stats-grid .stat-item + .stat-item::before { display: none; }
+    .stat-num { font-size: clamp(22px, 6vw, 32px) !important; }
+    .stat-label { font-size: 11px; }
+
+    /* ── SUPPLY INTRO ── */
+    .supply-intro-grid { grid-template-columns: 1fr; gap: 32px; }
+    .supply-intro-grid img,
+    .supply-intro-grid .supply-img { border-radius: var(--radius); }
+    .platform-tags { gap: 8px; }
+    .platform-tag { font-size: 12px; padding: 6px 10px; }
+
+    /* ── ADVANTAGE CARDS ── */
+    #advantage { padding: 56px 0; }
+    .adv-cards { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+    .adv-card { padding: 24px 20px; }
+
+    /* ── ABOUT GRID ── */
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-values { margin-top: 24px; }
+
+    /* ── PARTNER SPLIT ── */
+    .partner-split { grid-template-columns: 1fr; gap: 24px; }
+    .partner-box { padding: 28px 20px; }
+
+    /* ── PARTNER MARQUEE ── */
+    #partner-logos { padding: 40px 0; }
+    .logos-marquee-wrap { margin-top: 28px; }
+
+    /* ── CONSULT / FORM ── */
+    .consult-layout { grid-template-columns: 1fr; gap: 32px; }
+    .form-box { padding: 24px 18px; }
+    .form-grid { grid-template-columns: 1fr; gap: 14px; }
+
+    /* ── SECTION GLOBAL ── */
+    .section-title  { font-size: clamp(22px, 6vw, 34px); }
+    .section-sub    { font-size: 14px; }
+    .section-label  { font-size: 11px; }
+    .wrap { padding-left: 18px; padding-right: 18px; }
+
+    /* ── FOOTER ── */
+    .footer-inner { padding: 40px 0 0; gap: 24px; }
+    .footer-qr-center img { width: 90px; height: 90px; }
+    .footer-nav-row { flex-wrap: wrap; gap: 6px 12px; justify-content: center; }
+    .footer-nav-sep { display: none; }
+    .footer-info-row { flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 12px; line-height: 1.7; }
+    .info-sep { display: none; }
+    .footer-links-inline { flex-wrap: wrap; justify-content: center; gap: 6px 10px; }
+    .footer-copyright { padding: 16px 0; }
+    .footer-copyright p { font-size: 11px; text-align: center; }
+  }
+
+  /* Small phones */
+  @media (max-width: 420px) {
+    .nav-inner { padding: 0 16px; }
+    .hero-title { font-size: 26px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .wrap { padding-left: 14px; padding-right: 14px; }
+    .adv-card { padding: 20px 16px; }
+    .form-box { padding: 20px 14px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+  NAVBAR
+══════════════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_nav)"><path d="M31.6069 28.119C32.3056 27.7552 32.7387 27.0391 32.7387 26.2509C32.7387 25.4627 32.3056 24.7495 31.6069 24.3857L19.5815 18.1146C19.4256 18.0338 19.3245 17.8692 19.3245 17.6931C19.3245 17.517 19.4227 17.3524 19.5815 17.2715L31.6069 10.9975C32.3056 10.6338 32.7387 9.91771 32.7387 9.12949C32.7387 8.34127 32.3056 7.62812 31.6069 7.26433C31.6069 7.26433 18.2129 0.303162 18.1898 0.288725C17.8664 0.0981666 17.4998 0 17.1302 0C15.9695 0 15.0254 0.944132 15.0254 2.10481V33.2207C15.0254 34.3814 15.9695 35.3255 17.1302 35.3255C17.4045 35.3255 17.6701 35.2736 17.9242 35.1696C17.9473 35.161 31.6069 28.119 31.6069 28.119ZM19.2321 6.34618C19.2321 6.17872 19.3187 6.0257 19.4602 5.93908C19.6017 5.85246 19.7807 5.84669 19.9279 5.92464L25.2694 8.71084C25.4253 8.79169 25.5263 8.95626 25.5263 9.13238C25.5263 9.3085 25.4282 9.47308 25.2694 9.55392L19.9279 12.3401C19.8587 12.3748 19.7836 12.395 19.7085 12.395C19.6219 12.395 19.5382 12.3719 19.4631 12.3257C19.3216 12.2391 19.235 12.086 19.235 11.9186V6.34618H19.2321ZM19.2321 23.4676C19.2321 23.3001 19.3187 23.1471 19.4602 23.0605C19.6017 22.9739 19.7807 22.9681 19.9279 23.0461L25.2694 25.8323C25.4253 25.9131 25.5263 26.0777 25.5263 26.2538C25.5263 26.4299 25.4282 26.5945 25.2694 26.6753L19.9279 29.4615C19.8587 29.4962 19.7836 29.5164 19.7085 29.5164C19.6219 29.5164 19.5382 29.4933 19.4631 29.4471C19.3216 29.3605 19.235 29.2075 19.235 29.04V23.4676H19.2321Z" fill="#2F0463"/><path d="M0 10.2148C0 10.645 0.222318 11.029 0.594774 11.2455L9.96391 16.6389C10.3364 16.8526 10.7781 16.8526 11.1506 16.6389C11.523 16.4253 11.7425 16.0412 11.7425 15.611V4.82138C11.7453 4.39118 11.523 4.00718 11.1535 3.79352C10.9687 3.68669 10.7637 3.63184 10.5587 3.63184C10.3537 3.63184 10.1516 3.68381 9.9668 3.79063L0.594774 9.18691C0.222318 9.40057 0 9.78457 0 10.2148Z" fill="#2F0463"/><path d="M0 25.8056C0 26.2358 0.222318 26.6198 0.594774 26.8364L9.96391 32.2298C10.3364 32.4434 10.7781 32.4434 11.1506 32.2298C11.523 32.0161 11.7425 31.6321 11.7425 31.2019V20.4151C11.7453 19.9849 11.523 19.6009 11.1535 19.3873C10.9687 19.2804 10.7637 19.2256 10.5587 19.2256C10.3537 19.2256 10.1516 19.2776 9.9668 19.3844L0.594774 24.7749C0.222318 24.9885 0 25.3754 0 25.8056Z" fill="#2F0463"/><path d="M43.9207 3.70117L46.089 3.7849V22.7137H43.9207V19.1191C43.4962 19.3183 43.0401 19.5262 42.5608 19.7456C42.0786 19.9651 41.6109 20.1787 41.1576 20.3837C40.7043 20.5887 40.2856 20.7822 39.9016 20.9583C39.5176 21.1344 39.2144 21.273 38.9864 21.374L38.1577 19.1624C38.4262 19.0498 38.8016 18.8881 39.2837 18.6831C39.7659 18.4781 40.2798 18.2558 40.8255 18.0133C41.3712 17.7736 41.9198 17.5282 42.4742 17.2799C43.0285 17.0316 43.5078 16.8093 43.9207 16.6101V11.0579H39.0066V8.82316H43.9207V3.70117ZM57.0634 16.9941C57.0634 17.3059 57.0461 17.713 57.0115 18.2183C56.9768 18.7207 56.9306 19.1797 56.8729 19.5897C56.8007 20.1008 56.7054 20.5281 56.587 20.8774C56.4658 21.2239 56.2925 21.4982 56.0673 21.6974C55.8392 21.8966 55.5476 22.0381 55.1838 22.1218C54.8229 22.2056 54.3581 22.2489 53.7893 22.2489H51.748C51.1821 22.2489 50.7086 22.2027 50.3333 22.1103C49.9579 22.0179 49.6548 21.862 49.4295 21.6426C49.2015 21.4231 49.0427 21.1229 48.9503 20.7389C48.8579 20.3548 48.8117 19.8669 48.8117 19.2721V3.76469L50.98 3.84842V10.1859C51.7596 9.68933 52.5536 9.15808 53.362 8.58929C54.1704 8.02339 54.9009 7.4777 55.5534 6.95222L56.8296 8.90978C56.46 9.16385 56.0327 9.45835 55.5419 9.79327C55.0539 10.1253 54.54 10.4718 54.0001 10.824C53.4602 11.1792 52.9289 11.5285 52.4063 11.8779C51.8808 12.2243 51.4073 12.5333 50.98 12.8018V19.0556C50.98 19.2837 50.9944 19.4627 51.0233 19.5984C51.0522 19.7341 51.107 19.8409 51.1937 19.9189C51.2774 19.9968 51.3929 20.0488 51.5344 20.0777C51.6758 20.1065 51.8606 20.121 52.0887 20.121H53.2147C53.5121 20.121 53.746 20.1065 53.9163 20.0777C54.0867 20.0488 54.2224 19.9939 54.3206 19.9073C54.4187 19.8236 54.4938 19.7081 54.5429 19.5666C54.592 19.4252 54.6382 19.2404 54.6815 19.0123C54.7103 18.8708 54.7334 18.6716 54.7565 18.4175C54.7767 18.1634 54.7912 17.892 54.7998 17.6091C54.8056 17.3261 54.8143 17.0547 54.82 16.8006C54.8258 16.5466 54.8316 16.3531 54.8316 16.2261L57.0634 16.9912V16.9941Z" fill="#2F0463"/><path d="M72.8253 17.4615V22.9704H70.6137V17.652L59.3621 18.6741L59.2783 16.4394L70.6137 15.4173V3.67773L72.8253 3.76146V15.2036L78.057 14.7359L78.1407 16.9678L72.8224 17.4557L72.8253 17.4615ZM66.8054 14.9525C66.4791 14.6984 66.072 14.3981 65.5812 14.0603C65.0932 13.7196 64.588 13.3789 64.0712 13.0382C63.5543 12.6975 63.0433 12.3799 62.5409 12.0825C62.0385 11.7851 61.6083 11.5426 61.2532 11.3607L62.2955 9.46668C62.6795 9.6659 63.1213 9.91131 63.6236 10.2C64.126 10.4917 64.6342 10.7948 65.1452 11.1153C65.6563 11.4358 66.1413 11.7505 66.6033 12.0623C67.0652 12.3741 67.4492 12.6427 67.7611 12.8707L66.8054 14.9553V14.9525ZM68.3789 9.93152C68.0238 9.64857 67.5965 9.32809 67.0912 8.97584C66.5888 8.62071 66.0749 8.27135 65.5494 7.922C65.024 7.57553 64.5245 7.25215 64.0509 6.95477C63.5746 6.65738 63.1819 6.42351 62.8701 6.25316L63.9124 4.35913C64.2675 4.54391 64.689 4.78066 65.177 5.07228C65.6649 5.36389 66.1702 5.67283 66.687 5.9962C67.2038 6.32246 67.7033 6.65161 68.1855 6.98653C68.6677 7.31856 69.0863 7.61306 69.4414 7.87003L68.3789 9.93441V9.93152Z" fill="#2F0463"/><path d="M99.0704 20.0343V22.0756H80.1416V20.0343H92.883L93.1169 17.1413H83.1617L84.7987 6.93196H81.2041V4.82715H98.0714V6.93196H87.0104L86.586 9.48429H95.88L95.1351 20.0343H99.0704ZM93.2844 15.0798L93.5818 11.592H86.2452L85.6707 15.0798H93.2844Z" fill="#2F0463"/><path d="M114.852 14.9728C115.262 16.3212 115.915 17.5338 116.81 18.6108C117.702 19.6877 118.767 20.525 120 21.1198L118.894 23.0774C117.872 22.5374 116.934 21.8041 116.076 20.8773C115.219 19.9476 114.534 18.9313 114.023 17.8254C113.57 18.8331 112.955 19.7715 112.184 20.6434C111.41 21.5154 110.437 22.3555 109.259 23.164L108.174 21.6337V22.9099H106.303V19.8696C105.422 20.0111 104.55 20.1439 103.687 20.2623C102.821 20.3836 101.943 20.4933 101.051 20.5914L100.901 18.5501C101.141 18.5213 101.374 18.4924 101.602 18.4664C101.831 18.4375 102.064 18.4087 102.304 18.3827V6.69797H101.389V4.78372H109.28V6.69797H108.174V17.5021L109.534 17.248L109.577 19.2893L108.174 19.5434V21.244C109.548 20.4067 110.605 19.4856 111.344 18.478C112.08 17.4703 112.557 16.301 112.77 14.97H108.815V12.8854H112.921V9.75846H109.326V7.73738H111.601C111.488 7.46887 111.356 7.17726 111.208 6.86543C111.058 6.55361 110.902 6.24467 110.741 5.94151C110.576 5.63546 110.409 5.34385 110.23 5.05801C110.053 4.77506 109.877 4.5181 109.707 4.29289L111.324 3.35742C111.693 3.89734 112.046 4.45169 112.386 5.02625C112.727 5.60082 113.03 6.13496 113.302 6.63157L111.835 7.73738H114.133C114.347 7.42556 114.56 7.08198 114.783 6.70664C115.002 6.33129 115.219 5.95018 115.432 5.56906C115.646 5.18794 115.842 4.80682 116.027 4.43148C116.212 4.05614 116.368 3.71833 116.495 3.42094L118.302 4.3131C118.204 4.51232 118.086 4.74619 117.95 5.01471C117.814 5.28322 117.664 5.57194 117.494 5.87511C117.324 6.18116 117.147 6.49298 116.963 6.81058C116.778 7.12817 116.593 7.43711 116.408 7.7345H118.981V9.75557H114.939V12.8825H119.385V14.9671H114.855L114.852 14.9728ZM104.068 6.69797V9.23009H106.303V6.69797H104.068ZM104.068 13.5263H106.303V11.0577H104.068V13.5263ZM104.068 18.143C104.438 18.0853 104.81 18.0333 105.186 17.9842C105.561 17.9352 105.933 17.8745 106.303 17.8023V15.3771H104.068V18.143Z" fill="#2F0463"/></g><defs><clipPath id="clip0_nav"><rect width="120" height="35.3255" fill="white"/></clipPath></defs></svg>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">首页</a>
+      <a href="team.html">团队风采</a>
+      <a href="about.html">关于我们</a>
+      <a href="contact.html">联系我们</a>
+      <a href="careers.html">人才招聘</a>
+    </nav>
+  <div class="nav-mobile-menu" id="navMobileMenu">
+      <a href="index.html" class="active">首页</a>
+      <a href="team.html">团队风采</a>
+      <a href="about.html">关于我们</a>
+      <a href="contact.html">联系我们</a>
+      <a href="careers.html">人才招聘</a>
+  </div>
+    <div class="nav-right">
+      <div class="lang-toggle" id="langToggle" role="switch" aria-label="语言切换" tabindex="0">
+        <div class="lang-toggle-thumb" id="langThumb"></div>
+        <span class="lang-toggle-opt active" data-lang="zh">ZH</span>
+        <span class="lang-toggle-opt" data-lang="en">EN</span>
+      </div>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="打开菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+  HERO
+══════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-blob hero-bg-blob-1"></div>
+  <div class="hero-bg-blob hero-bg-blob-2"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-left fade-in">
+        <div class="hero-eyebrow"><span></span>全球跨境电商综合服务平台</div>
+        <h1 class="hero-title">构建<em>云端</em>服务生态<br>赋能<em>全球</em>电商企业</h1>
+        <p class="hero-sub">通过先进的云端解决方案，提升电商企业的运营效率，推动全球市场的无缝连接与业务增长。</p>
+        <div class="hero-actions">
+          <a href="#consult" class="btn-primary">立即拓展商机 →</a>
+          <a href="#about" class="btn-outline">了解更多</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-in" style="transition-delay:.15s">
+        <div class="hero-card-cluster">
+          <svg viewBox="0 0 560 500" fill="none" xmlns="http://www.w3.org/2000/svg"
+               style="width:100%;max-width:560px;filter:drop-shadow(0 24px 48px rgba(10,4,50,0.55));border-radius:24px;">
+            <defs>
+              <!-- === GRADIENTS === -->
+              <linearGradient id="gBg" x1="0" y1="0" x2="560" y2="500" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#080620"/>
+                <stop offset="45%" stop-color="#0c0a38"/>
+                <stop offset="100%" stop-color="#1a0850"/>
+              </linearGradient>
+              <!-- Cloud body -->
+              <linearGradient id="gCloud" x1="0.3" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="30%" stop-color="#ddeeff"/>
+                <stop offset="70%" stop-color="#90c8f8"/>
+                <stop offset="100%" stop-color="#4a8ed8"/>
+              </linearGradient>
+              <!-- Cloud shadow/depth -->
+              <linearGradient id="gCloudBot" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#5a9ee0"/>
+                <stop offset="100%" stop-color="#1a4a90"/>
+              </linearGradient>
+              <!-- Platform top -->
+              <radialGradient id="gPlatTop" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="#3a70e0"/>
+                <stop offset="100%" stop-color="#0e2470"/>
+              </radialGradient>
+              <!-- Platform glow ring -->
+              <radialGradient id="gRing" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.8"/>
+                <stop offset="60%" stop-color="#1565c0" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#1565c0" stop-opacity="0"/>
+              </radialGradient>
+              <!-- DB cylinder -->
+              <linearGradient id="gCylB" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#102060"/>
+                <stop offset="45%" stop-color="#1e3898"/>
+                <stop offset="100%" stop-color="#0a1648"/>
+              </linearGradient>
+              <linearGradient id="gCylP" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                <stop offset="0%" stop-color="#1a0848"/>
+                <stop offset="50%" stop-color="#3a18a0"/>
+                <stop offset="100%" stop-color="#100630"/>
+              </linearGradient>
+              <!-- World glow -->
+              <radialGradient id="gWorld" cx="50%" cy="50%" r="55%">
+                <stop offset="0%" stop-color="#7B3FBF" stop-opacity="0.22"/>
+                <stop offset="100%" stop-color="#2F0463" stop-opacity="0"/>
+              </radialGradient>
+              <!-- Ambient blue pulse -->
+              <radialGradient id="gPulse" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#1565c0" stop-opacity="0"/>
+              </radialGradient>
+              <!-- Chart bars -->
+              <linearGradient id="gBarB" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4fc3f7"/>
+                <stop offset="100%" stop-color="#1565c0" stop-opacity="0.3"/>
+              </linearGradient>
+              <linearGradient id="gBarP" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c084fc"/>
+                <stop offset="100%" stop-color="#7B3FBF" stop-opacity="0.3"/>
+              </linearGradient>
+              <linearGradient id="gBarR" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f9a8d4"/>
+                <stop offset="100%" stop-color="#db2777" stop-opacity="0.3"/>
+              </linearGradient>
+              <!-- Glowing horizontal line -->
+              <linearGradient id="gLine" x1="0" y1="0.5" x2="1" y2="0.5">
+                <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#4fc3f7" stop-opacity="1"/>
+                <stop offset="100%" stop-color="#4fc3f7" stop-opacity="0"/>
+              </linearGradient>
+              <!-- === FILTERS === -->
+              <filter id="fBloom" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="12" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="fGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="7" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="fSm" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3.5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="fShadow">
+                <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="rgba(10,4,50,0.6)"/>
+              </filter>
+            </defs>
+
+            <!-- ═══ BACKGROUND ═══ -->
+            <rect width="560" height="500" rx="24" fill="url(#gBg)"/>
+            <!-- Subtle dot grid -->
+            <g opacity="0.04" fill="#8899ff">
+              <circle cx="40" cy="40" r="1.2"/><circle cx="80" cy="40" r="1.2"/><circle cx="120" cy="40" r="1.2"/><circle cx="160" cy="40" r="1.2"/><circle cx="200" cy="40" r="1.2"/><circle cx="240" cy="40" r="1.2"/><circle cx="280" cy="40" r="1.2"/><circle cx="320" cy="40" r="1.2"/><circle cx="360" cy="40" r="1.2"/><circle cx="400" cy="40" r="1.2"/><circle cx="440" cy="40" r="1.2"/><circle cx="480" cy="40" r="1.2"/><circle cx="520" cy="40" r="1.2"/>
+              <circle cx="40" cy="80" r="1.2"/><circle cx="80" cy="80" r="1.2"/><circle cx="120" cy="80" r="1.2"/><circle cx="160" cy="80" r="1.2"/><circle cx="200" cy="80" r="1.2"/><circle cx="240" cy="80" r="1.2"/><circle cx="280" cy="80" r="1.2"/><circle cx="320" cy="80" r="1.2"/><circle cx="360" cy="80" r="1.2"/><circle cx="400" cy="80" r="1.2"/><circle cx="440" cy="80" r="1.2"/><circle cx="480" cy="80" r="1.2"/><circle cx="520" cy="80" r="1.2"/>
+              <circle cx="40" cy="120" r="1.2"/><circle cx="80" cy="120" r="1.2"/><circle cx="120" cy="120" r="1.2"/><circle cx="160" cy="120" r="1.2"/><circle cx="200" cy="120" r="1.2"/><circle cx="240" cy="120" r="1.2"/><circle cx="280" cy="120" r="1.2"/><circle cx="320" cy="120" r="1.2"/><circle cx="360" cy="120" r="1.2"/><circle cx="400" cy="120" r="1.2"/><circle cx="440" cy="120" r="1.2"/><circle cx="480" cy="120" r="1.2"/><circle cx="520" cy="120" r="1.2"/>
+              <circle cx="40" cy="160" r="1.2"/><circle cx="80" cy="160" r="1.2"/><circle cx="120" cy="160" r="1.2"/><circle cx="160" cy="160" r="1.2"/><circle cx="200" cy="160" r="1.2"/><circle cx="240" cy="160" r="1.2"/><circle cx="280" cy="160" r="1.2"/><circle cx="320" cy="160" r="1.2"/><circle cx="360" cy="160" r="1.2"/><circle cx="400" cy="160" r="1.2"/><circle cx="440" cy="160" r="1.2"/><circle cx="480" cy="160" r="1.2"/><circle cx="520" cy="160" r="1.2"/>
+              <circle cx="40" cy="200" r="1.2"/><circle cx="80" cy="200" r="1.2"/><circle cx="120" cy="200" r="1.2"/><circle cx="160" cy="200" r="1.2"/><circle cx="200" cy="200" r="1.2"/><circle cx="240" cy="200" r="1.2"/><circle cx="280" cy="200" r="1.2"/><circle cx="320" cy="200" r="1.2"/><circle cx="360" cy="200" r="1.2"/><circle cx="400" cy="200" r="1.2"/><circle cx="440" cy="200" r="1.2"/><circle cx="480" cy="200" r="1.2"/><circle cx="520" cy="200" r="1.2"/>
+              <circle cx="40" cy="240" r="1.2"/><circle cx="80" cy="240" r="1.2"/><circle cx="120" cy="240" r="1.2"/><circle cx="160" cy="240" r="1.2"/><circle cx="200" cy="240" r="1.2"/><circle cx="240" cy="240" r="1.2"/><circle cx="280" cy="240" r="1.2"/><circle cx="320" cy="240" r="1.2"/><circle cx="360" cy="240" r="1.2"/><circle cx="400" cy="240" r="1.2"/><circle cx="440" cy="240" r="1.2"/><circle cx="480" cy="240" r="1.2"/><circle cx="520" cy="240" r="1.2"/>
+              <circle cx="40" cy="280" r="1.2"/><circle cx="80" cy="280" r="1.2"/><circle cx="120" cy="280" r="1.2"/><circle cx="160" cy="280" r="1.2"/><circle cx="200" cy="280" r="1.2"/><circle cx="240" cy="280" r="1.2"/><circle cx="280" cy="280" r="1.2"/><circle cx="320" cy="280" r="1.2"/><circle cx="360" cy="280" r="1.2"/><circle cx="400" cy="280" r="1.2"/><circle cx="440" cy="280" r="1.2"/><circle cx="480" cy="280" r="1.2"/><circle cx="520" cy="280" r="1.2"/>
+            </g>
+            <!-- Large ambient glows -->
+            <ellipse cx="280" cy="280" rx="200" ry="160" fill="url(#gPulse)" opacity="0.7"/>
+            <ellipse cx="440" cy="160" rx="120" ry="90" fill="url(#gWorld)" opacity="0.9"/>
+            <ellipse cx="110" cy="340" rx="100" ry="80" fill="#3018a0" opacity="0.08"/>
+
+            <!-- ═══════════════════════════════════
+                 LEFT PANEL
+            ═══════════════════════════════════ -->
+            <rect x="14" y="70" width="140" height="270" rx="14"
+                  fill="rgba(255,255,255,0.025)" stroke="rgba(79,195,247,0.18)" stroke-width="1"/>
+            <!-- Panel label -->
+            <text x="84" y="94" text-anchor="middle" font-family="'Noto Sans SC',sans-serif"
+                  font-size="10" font-weight="700" fill="rgba(255,255,255,0.65)" letter-spacing="0.3">行云端服务生态系统</text>
+
+            <!-- ── Laptop 3D isometric ── -->
+            <g transform="translate(26,104)">
+              <!-- Screen back -->
+              <rect x="4" y="0" width="90" height="58" rx="7" fill="#12285a" stroke="#1e4490" stroke-width="1.2"/>
+              <!-- Screen face -->
+              <rect x="7" y="3" width="84" height="50" rx="5" fill="#0a1840"/>
+              <!-- Screen content glow lines -->
+              <rect x="12" y="9"  width="48" height="5"  rx="2.5" fill="#4fc3f7" opacity="0.55"/>
+              <rect x="12" y="18" width="36" height="3"  rx="1.5" fill="rgba(255,255,255,0.18)"/>
+              <rect x="12" y="24" width="56" height="3"  rx="1.5" fill="rgba(255,255,255,0.12)"/>
+              <rect x="12" y="30" width="40" height="3"  rx="1.5" fill="rgba(255,255,255,0.08)"/>
+              <rect x="12" y="36" width="30" height="3"  rx="1.5" fill="rgba(255,255,255,0.06)"/>
+              <!-- WiFi symbol top-right of screen -->
+              <path d="M73 14 Q80 8 87 14"  stroke="#4fc3f7" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/>
+              <path d="M75 18 Q80 13 85 18"  stroke="#4fc3f7" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.9"/>
+              <circle cx="80" cy="22" r="2" fill="#4fc3f7"/>
+              <!-- Keyboard base -->
+              <rect x="0" y="58" width="98" height="9"  rx="3.5" fill="#162e68" stroke="#1e3c82" stroke-width="1"/>
+              <!-- Touchpad -->
+              <rect x="35" y="61" width="28" height="4"  rx="2"   fill="#1a3878" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            </g>
+
+            <!-- Dashed connector line: laptop → cloud card -->
+            <line x1="84" y1="175" x2="84" y2="198"
+                  stroke="rgba(79,195,247,0.4)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <circle cx="84" cy="172" r="3.5" fill="#4fc3f7" filter="url(#fSm)" opacity="0.9"/>
+
+            <!-- ── Mini cloud-server card ── -->
+            <g transform="translate(26,200)">
+              <rect width="106" height="68" rx="12"
+                    fill="rgba(255,255,255,0.04)" stroke="rgba(79,195,247,0.22)" stroke-width="1"/>
+              <!-- Cloud shape -->
+              <ellipse cx="42" cy="34" rx="20" ry="13" fill="#14448a"/>
+              <circle  cx="26" cy="38"  r="12" fill="#14448a"/>
+              <circle  cx="56" cy="38"  r="10" fill="#14448a"/>
+              <rect    x="14" y="38" width="58" height="13" rx="5" fill="#14448a"/>
+              <!-- Blue glow wash -->
+              <ellipse cx="42" cy="35" rx="20" ry="13" fill="#4fc3f7" opacity="0.18"/>
+              <!-- Server lines on cloud -->
+              <rect x="34" y="28" width="16" height="4" rx="1.5" fill="rgba(255,255,255,0.7)"/>
+              <rect x="34" y="34" width="16" height="4" rx="1.5" fill="rgba(255,255,255,0.45)"/>
+              <circle cx="47" cy="30" r="1.8" fill="#4fc3f7"/>
+              <circle cx="47" cy="36" r="1.8" fill="#c084fc"/>
+              <!-- Label -->
+              <text x="74" y="32" font-family="'Noto Sans SC',sans-serif" font-size="9" font-weight="600" fill="rgba(255,255,255,0.8)">云端</text>
+              <text x="74" y="44" font-family="'Noto Sans SC',sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">架构</text>
+            </g>
+
+            <!-- Bottom left text -->
+            <text x="84" y="290" text-anchor="middle" font-family="'Noto Sans SC',sans-serif"
+                  font-size="9.5" font-weight="600" fill="rgba(255,255,255,0.7)">电商企业云端解决方案</text>
+            <text x="84" y="305" text-anchor="middle" font-family="'Noto Sans SC',sans-serif"
+                  font-size="9.5" fill="rgba(79,195,247,0.75)">提升运营效率</text>
+
+            <!-- ═══════════════════════════════════
+                 CENTER — 3D CLOUD + PLATFORM
+            ═══════════════════════════════════ -->
+            <!-- Platform base shadow/glow -->
+            <ellipse cx="280" cy="398" rx="100" ry="24" fill="url(#gRing)" filter="url(#fBloom)"/>
+            <!-- Platform lower cylinder -->
+            <ellipse cx="280" cy="395" rx="78" ry="18" fill="#0a1850"/>
+            <rect x="202" y="358" width="156" height="37" rx="0" fill="#0d1e60"/>
+            <ellipse cx="280" cy="358" rx="78" ry="18" fill="#102070"/>
+            <!-- Platform top face -->
+            <ellipse cx="280" cy="350" rx="78" ry="18" fill="url(#gPlatTop)"/>
+            <!-- Glowing ring on platform -->
+            <ellipse cx="280" cy="350" rx="50" ry="11"
+                     fill="none" stroke="#4fc3f7" stroke-width="2.5" opacity="0.7" filter="url(#fSm)"/>
+            <ellipse cx="280" cy="350" rx="64" ry="14"
+                     fill="none" stroke="rgba(79,195,247,0.25)" stroke-width="5"/>
+            <!-- Central glow disc on platform -->
+            <ellipse cx="280" cy="350" rx="30" ry="7" fill="#4fc3f7" opacity="0.22" filter="url(#fBloom)"/>
+
+            <!-- Cloud stem -->
+            <rect x="270" y="218" width="20" height="132" rx="8" fill="#122466"/>
+            <rect x="274" y="218" width="12" height="132" rx="6" fill="#1a3080"/>
+
+            <!-- ── Main 3D Cloud body ── -->
+            <!-- Shadow/bottom depth -->
+            <ellipse cx="280" cy="218" rx="88" ry="30" fill="url(#gCloudBot)" opacity="0.6"/>
+            <!-- Main cloud fills -->
+            <ellipse cx="280" cy="175" rx="72" ry="46" fill="url(#gCloud)"/>
+            <circle  cx="228" cy="195" r="38" fill="url(#gCloud)"/>
+            <circle  cx="332" cy="195" r="34" fill="url(#gCloud)"/>
+            <rect    x="190" y="185" width="180" height="46" rx="18" fill="url(#gCloud)"/>
+            <!-- Highlight sheen -->
+            <ellipse cx="260" cy="160" rx="40" ry="22" fill="rgba(255,255,255,0.45)" opacity="0.6"/>
+            <!-- Server icon inside cloud -->
+            <g filter="url(#fShadow)">
+              <rect x="252" y="178" width="56" height="11" rx="3" fill="rgba(8,20,70,0.8)"/>
+              <rect x="252" y="192" width="56" height="11" rx="3" fill="rgba(8,20,70,0.7)"/>
+              <circle cx="302" cy="183.5" r="3" fill="#4fc3f7"/>
+              <circle cx="302" cy="197.5" r="3" fill="#c084fc"/>
+              <rect x="258" y="181" width="30" height="2.5" rx="1.2" fill="rgba(255,255,255,0.5)"/>
+              <rect x="258" y="194" width="22" height="2.5" rx="1.2" fill="rgba(255,255,255,0.4)"/>
+            </g>
+            <!-- WiFi arcs above cloud -->
+            <path d="M255 148 Q280 130 305 148" stroke="#4fc3f7" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.7" filter="url(#fSm)"/>
+            <path d="M263 138 Q280 122 297 138" stroke="#4fc3f7" stroke-width="2"   fill="none" stroke-linecap="round" opacity="0.85" filter="url(#fSm)"/>
+            <circle cx="280" cy="126" r="3.5" fill="#4fc3f7" filter="url(#fGlow)"/>
+
+            <!-- ── DATABASE CYLINDERS ── -->
+            <!-- Left-back cylinder (blue) -->
+            <g transform="translate(145,264)">
+              <ellipse cx="30" cy="72" rx="30" ry="8.5" fill="#0a1440"/>
+              <rect    x="0"  y="22" width="60"  height="50" fill="url(#gCylB)"/>
+              <ellipse cx="30" cy="22" rx="30" ry="8.5" fill="#1e3c9a"/>
+              <ellipse cx="30" cy="22" rx="22" ry="6.2" fill="#2a52b8" opacity="0.5"/>
+              <line x1="4" y1="34" x2="56" y2="34" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <line x1="4" y1="46" x2="56" y2="46" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <line x1="4" y1="58" x2="56" y2="58" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <circle cx="42" cy="22" r="4" fill="#4fc3f7" filter="url(#fSm)" opacity="0.9"/>
+            </g>
+            <!-- Right-back cylinder (purple) -->
+            <g transform="translate(355,258)">
+              <ellipse cx="30" cy="78" rx="30" ry="8.5" fill="#0a0a30"/>
+              <rect    x="0"  y="20" width="60"  height="58" fill="url(#gCylP)"/>
+              <ellipse cx="30" cy="20" rx="30" ry="8.5" fill="#3a18a0"/>
+              <ellipse cx="30" cy="20" rx="22" ry="6.2" fill="#5030c0" opacity="0.5"/>
+              <line x1="4" y1="32" x2="56" y2="32" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <line x1="4" y1="44" x2="56" y2="44" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <line x1="4" y1="56" x2="56" y2="56" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+              <circle cx="42" cy="20" r="4" fill="#c084fc" filter="url(#fSm)" opacity="0.9"/>
+            </g>
+            <!-- Front-left small cylinder -->
+            <g transform="translate(198,330)">
+              <ellipse cx="24" cy="50" rx="24" ry="7"   fill="#0a1030"/>
+              <rect    x="0"  y="18" width="48" height="32" fill="url(#gCylB)"/>
+              <ellipse cx="24" cy="18" rx="24" ry="7"   fill="#163882"/>
+              <ellipse cx="24" cy="18" rx="18" ry="5.2" fill="#2050a0" opacity="0.55"/>
+              <circle  cx="34" cy="18" r="3" fill="#4fc3f7" filter="url(#fSm)" opacity="0.85"/>
+            </g>
+            <!-- Front-right small cylinder with download icon -->
+            <g transform="translate(310,330)">
+              <ellipse cx="24" cy="50" rx="24" ry="7"   fill="#08082a"/>
+              <rect    x="0"  y="18" width="48" height="32" fill="url(#gCylP)"/>
+              <ellipse cx="24" cy="18" rx="24" ry="7"   fill="#301890"/>
+              <ellipse cx="24" cy="18" rx="18" ry="5.2" fill="#4828b0" opacity="0.55"/>
+              <!-- Download arrow -->
+              <path d="M20 26 L24 32 L28 26" stroke="#f9a8d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <line  x1="24" y1="22"  x2="24" y2="32" stroke="#f9a8d4" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <!-- Small right-extra cylinder (back-right) -->
+            <g transform="translate(420,300)">
+              <ellipse cx="18" cy="42" rx="18" ry="5.5" fill="#08082a"/>
+              <rect    x="0"  y="14" width="36" height="28" fill="url(#gCylP)"/>
+              <ellipse cx="18" cy="14" rx="18" ry="5.5" fill="#2a1478"/>
+              <ellipse cx="18" cy="14" rx="13" ry="4"   fill="#3d22a0" opacity="0.5"/>
+              <circle  cx="26" cy="14" r="2.5" fill="#c084fc" filter="url(#fSm)" opacity="0.8"/>
+            </g>
+
+            <!-- ── CONNECTOR LINES ── -->
+            <!-- cloud → left cyl -->
+            <line x1="228" y1="232" x2="192" y2="278"
+                  stroke="rgba(79,195,247,0.38)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- cloud → right cyl -->
+            <line x1="332" y1="228" x2="372" y2="272"
+                  stroke="rgba(192,132,252,0.38)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- cloud → front-left cyl -->
+            <line x1="256" y1="240" x2="228" y2="336"
+                  stroke="rgba(79,195,247,0.28)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- cloud → front-right cyl -->
+            <line x1="304" y1="240" x2="336" y2="336"
+                  stroke="rgba(192,132,252,0.28)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- cloud → far right small cyl -->
+            <line x1="348" y1="224" x2="432" y2="308"
+                  stroke="rgba(192,132,252,0.22)" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- Flow node dots -->
+            <circle cx="212" cy="258" r="4" fill="#4fc3f7" filter="url(#fSm)" opacity="0.85"/>
+            <circle cx="356" cy="254" r="4" fill="#c084fc" filter="url(#fSm)" opacity="0.85"/>
+            <circle cx="244" cy="290" r="3" fill="#4fc3f7" filter="url(#fSm)" opacity="0.65"/>
+            <circle cx="324" cy="292" r="3" fill="#c084fc" filter="url(#fSm)" opacity="0.65"/>
+
+            <!-- ═══════════════════════════════════
+                 RIGHT PANEL — World Map + Chart
+            ═══════════════════════════════════ -->
+            <rect x="406" y="70" width="140" height="270" rx="14"
+                  fill="rgba(255,255,255,0.025)" stroke="rgba(123,63,191,0.2)" stroke-width="1"/>
+            <text x="476" y="94" text-anchor="middle" font-family="'Noto Sans SC',sans-serif"
+                  font-size="10" font-weight="700" fill="rgba(255,255,255,0.65)" letter-spacing="0.3">云端市场连接增长</text>
+
+            <!-- World map dot matrix -->
+            <g fill="#4488cc" opacity="0.5">
+              <!-- 6 rows of dots forming abstract world map -->
+              <circle cx="420" cy="112" r="1.5"/><circle cx="428" cy="110" r="1.5"/><circle cx="436" cy="109" r="2"/><circle cx="444" cy="108" r="1.5"/><circle cx="452" cy="109" r="2.5"/><circle cx="460" cy="108" r="1.5"/><circle cx="468" cy="110" r="1.5"/><circle cx="476" cy="111" r="2"/><circle cx="484" cy="110" r="1.5"/><circle cx="492" cy="112" r="1.5"/><circle cx="500" cy="111" r="1.5"/><circle cx="508" cy="113" r="1.5"/><circle cx="516" cy="112" r="1.5"/><circle cx="534" cy="114" r="1.5"/>
+              <circle cx="418" cy="120" r="1.5"/><circle cx="426" cy="118" r="2"/><circle cx="434" cy="117" r="1.5"/><circle cx="442" cy="116" r="2.5"/><circle cx="450" cy="117" r="1.5"/><circle cx="458" cy="116" r="1.5"/><circle cx="466" cy="118" r="2"/><circle cx="474" cy="119" r="1.5"/><circle cx="482" cy="118" r="2.5"/><circle cx="490" cy="120" r="1.5"/><circle cx="498" cy="119" r="1.5"/><circle cx="506" cy="121" r="1.5"/><circle cx="514" cy="120" r="1.5"/><circle cx="524" cy="122" r="1.5"/>
+              <circle cx="416" cy="128" r="1.5"/><circle cx="424" cy="126" r="1.5"/><circle cx="432" cy="125" r="2"/><circle cx="440" cy="124" r="1.5"/><circle cx="448" cy="125" r="1.5"/><circle cx="456" cy="124" r="2"/><circle cx="464" cy="126" r="2.5"/><circle cx="472" cy="127" r="1.5"/><circle cx="480" cy="126" r="1.5"/><circle cx="488" cy="128" r="2"/><circle cx="496" cy="127" r="1.5"/><circle cx="504" cy="129" r="1.5"/><circle cx="512" cy="128" r="1.5"/>
+              <circle cx="418" cy="136" r="1.5"/><circle cx="426" cy="134" r="2"/><circle cx="434" cy="133" r="1.5"/><circle cx="442" cy="132" r="2.5"/><circle cx="450" cy="133" r="1.5"/><circle cx="458" cy="132" r="1.5"/><circle cx="466" cy="134" r="1.5"/><circle cx="474" cy="135" r="2"/><circle cx="482" cy="134" r="2.5"/><circle cx="490" cy="136" r="1.5"/><circle cx="498" cy="135" r="1.5"/><circle cx="506" cy="137" r="1.5"/><circle cx="514" cy="136" r="1.5"/>
+              <circle cx="420" cy="144" r="1.5"/><circle cx="428" cy="142" r="1.5"/><circle cx="436" cy="141" r="2"/><circle cx="444" cy="140" r="1.5"/><circle cx="452" cy="141" r="2"/><circle cx="460" cy="140" r="1.5"/><circle cx="468" cy="142" r="1.5"/><circle cx="476" cy="143" r="2.5"/><circle cx="484" cy="142" r="1.5"/><circle cx="492" cy="144" r="1.5"/><circle cx="500" cy="143" r="1.5"/>
+              <circle cx="422" cy="152" r="1.5"/><circle cx="430" cy="150" r="1.5"/><circle cx="438" cy="149" r="2"/><circle cx="446" cy="148" r="2.5"/><circle cx="454" cy="149" r="1.5"/><circle cx="462" cy="148" r="1.5"/><circle cx="470" cy="150" r="1.5"/><circle cx="478" cy="151" r="2"/><circle cx="486" cy="150" r="1.5"/><circle cx="494" cy="152" r="1.5"/>
+            </g>
+            <!-- Bright glowing nodes on map -->
+            <circle cx="442" cy="116" r="5.5" fill="#4fc3f7" filter="url(#fGlow)" opacity="0.9"/>
+            <circle cx="464" cy="126" r="4.5" fill="#c084fc" filter="url(#fGlow)" opacity="0.85"/>
+            <circle cx="442" cy="140" r="4"   fill="#4fc3f7" filter="url(#fSm)"  opacity="0.85"/>
+            <circle cx="482" cy="134" r="5"   fill="#f9a8d4" filter="url(#fGlow)" opacity="0.8"/>
+            <circle cx="476" cy="143" r="3.5" fill="#4fc3f7" filter="url(#fSm)"  opacity="0.75"/>
+            <!-- Arc connections between nodes -->
+            <path d="M442 116 Q453 110 464 126" stroke="#4fc3f7" stroke-width="1.2" fill="none" stroke-dasharray="3 2" opacity="0.55"/>
+            <path d="M464 126 Q455 136 442 140" stroke="#c084fc" stroke-width="1.2" fill="none" stroke-dasharray="3 2" opacity="0.5"/>
+            <path d="M442 140 Q462 140 482 134" stroke="#4fc3f7" stroke-width="1.2" fill="none" stroke-dasharray="3 2" opacity="0.5"/>
+            <path d="M482 134 Q480 138 476 143" stroke="#f9a8d4" stroke-width="1.2" fill="none" stroke-dasharray="3 2" opacity="0.45"/>
+
+            <!-- Chart panel -->
+            <rect x="414" y="170" width="124" height="96" rx="10"
+                  fill="rgba(255,255,255,0.03)" stroke="rgba(79,195,247,0.12)" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="426" y1="256" x2="530" y2="256" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <line x1="426" y1="178" x2="426" y2="256" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <!-- Y labels -->
+            <text x="422" y="249" text-anchor="end" font-size="7" fill="rgba(255,255,255,0.3)" font-family="sans-serif">0</text>
+            <text x="422" y="228" text-anchor="end" font-size="7" fill="rgba(255,255,255,0.3)" font-family="sans-serif">50</text>
+            <text x="422" y="208" text-anchor="end" font-size="7" fill="rgba(255,255,255,0.3)" font-family="sans-serif">80</text>
+            <text x="422" y="191" text-anchor="end" font-size="7" fill="rgba(255,255,255,0.3)" font-family="sans-serif">100</text>
+            <!-- Bars -->
+            <rect x="432" y="226" width="13" height="30" rx="3" fill="url(#gBarB)" opacity="0.9"/>
+            <rect x="450" y="215" width="13" height="41" rx="3" fill="url(#gBarB)" opacity="0.8"/>
+            <rect x="468" y="203" width="13" height="53" rx="3" fill="url(#gBarP)" opacity="0.85"/>
+            <rect x="486" y="210" width="13" height="46" rx="3" fill="url(#gBarR)" opacity="0.8"/>
+            <rect x="504" y="192" width="13" height="64" rx="3" fill="url(#gBarB)" opacity="0.9"/>
+            <!-- Line chart overlay -->
+            <polyline points="438,226 456,215 474,203 492,210 510,190"
+                      stroke="#4fc3f7" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+            <circle cx="438" cy="226" r="2.5" fill="#4fc3f7"/>
+            <circle cx="456" cy="215" r="2.5" fill="#4fc3f7"/>
+            <circle cx="474" cy="203" r="2.5" fill="#c084fc"/>
+            <circle cx="492" cy="210" r="3"   fill="#f9a8d4" filter="url(#fSm)"/>
+            <circle cx="510" cy="190" r="3.5" fill="#4fc3f7" filter="url(#fGlow)"/>
+
+            <!-- Right bottom labels -->
+            <text x="476" y="282" text-anchor="middle" font-family="'Noto Sans SC',sans-serif"
+                  font-size="9.5" font-weight="600" fill="rgba(255,255,255,0.7)">无缝连接与业务增长</text>
+
+            <!-- ═══════════════════════════════════
+                 TOP METRIC CARDS
+            ═══════════════════════════════════ -->
+            <!-- Left metric -->
+            <g transform="translate(16,14)">
+              <rect width="172" height="52" rx="13"
+                    fill="rgba(255,255,255,0.055)" stroke="rgba(79,195,247,0.28)" stroke-width="1"/>
+              <rect x="0" y="0" width="172" height="3" rx="1.5" fill="url(#gLine)"/>
+              <text x="14" y="20" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">日均订单处理</text>
+              <text x="14" y="40" font-family="sans-serif" font-size="22" font-weight="800" fill="#4fc3f7">+32%</text>
+              <rect x="105" y="22" width="52" height="17" rx="6"
+                    fill="rgba(79,195,247,0.12)" stroke="rgba(79,195,247,0.35)" stroke-width="1"/>
+              <text x="131" y="34" text-anchor="middle" font-family="sans-serif"
+                    font-size="10" font-weight="700" fill="#4fc3f7">↑ 增长</text>
+              <text x="14" y="50" font-family="'Noto Sans SC',sans-serif" font-size="8.5" fill="rgba(255,255,255,0.25)">较上月环比增长</text>
+            </g>
+            <!-- Right metric -->
+            <g transform="translate(370,14)">
+              <rect width="174" height="52" rx="13"
+                    fill="rgba(47,4,99,0.75)" stroke="rgba(123,63,191,0.55)" stroke-width="1"/>
+              <rect x="0" y="0" width="174" height="3" rx="1.5" fill="#7B3FBF"/>
+              <text x="14" y="20" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.55)">全球覆盖国家</text>
+              <text x="14" y="40" font-family="sans-serif" font-size="22" font-weight="800" fill="#ffffff">130+</text>
+              <text x="14" y="50" font-family="'Noto Sans SC',sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)">覆盖国家及地区</text>
+              <!-- Mini bars -->
+              <rect x="115" y="24" width="8" height="20" rx="2" fill="rgba(255,255,255,0.2)"/>
+              <rect x="127" y="16" width="8" height="28" rx="2" fill="rgba(255,255,255,0.38)"/>
+              <rect x="139" y="10" width="8" height="34" rx="2" fill="rgba(255,255,255,0.58)"/>
+              <rect x="151" y="14" width="8" height="30" rx="2" fill="rgba(255,255,255,0.82)"/>
+            </g>
+
+            <!-- ═══════════════════════════════════
+                 BOTTOM STATS BAR
+            ═══════════════════════════════════ -->
+            <rect x="16" y="420" width="528" height="66" rx="16"
+                  fill="rgba(255,255,255,0.035)" stroke="rgba(79,195,247,0.14)" stroke-width="1"/>
+            <rect x="16" y="420" width="528" height="3" rx="1.5" fill="url(#gLine)"/>
+            <line x1="148" y1="434" x2="148" y2="477" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            <line x1="280" y1="434" x2="280" y2="477" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            <line x1="412" y1="434" x2="412" y2="477" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+            <text x="82"  y="462" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="800" fill="#4fc3f7">20K+</text>
+            <text x="82"  y="478" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">合作商家</text>
+            <text x="214" y="462" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="800" fill="#c084fc">100K+</text>
+            <text x="214" y="478" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">产品 SKU</text>
+            <text x="346" y="462" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="800" fill="#f9a8d4">20M+</text>
+            <text x="346" y="478" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">供应产品</text>
+            <text x="478" y="462" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="800" fill="#4fc3f7">130+</text>
+            <text x="478" y="478" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">畅销国家</text>
+
+            <!-- ═══ DECORATIVE ACCENTS ═══ -->
+            <circle cx="192" cy="34" r="2"   fill="#4fc3f7" opacity="0.45"/>
+            <circle cx="364" cy="42" r="1.5" fill="#c084fc" opacity="0.55"/>
+            <circle cx="200" cy="408" r="1.8" fill="#4fc3f7" opacity="0.35"/>
+            <circle cx="364" cy="410" r="1.5" fill="#f9a8d4" opacity="0.4"/>
+            <circle cx="84"  cy="400" r="1.5" fill="#4fc3f7" opacity="0.3"/>
+            <circle cx="478" cy="404" r="2"   fill="#c084fc" opacity="0.35"/>
+          </svg>
+          <div class="hero-float-badge">🌏 全球化<br>一站式服务</div>
+          <div class="hero-float-badge2">✅ 完全免费<br>零费用入驻</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  STATS STRIP
+══════════════════════════════════════════════════════════════ -->
+<div id="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-item fade-in">
+        <div class="big">20K<span>+</span></div>
+        <div class="desc">合作商家</div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:.1s">
+        <div class="big">100K<span>+</span></div>
+        <div class="desc">产品 SKU</div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:.2s">
+        <div class="big">20M<span>+</span></div>
+        <div class="desc">供应产品</div>
+      </div>
+      <div class="stat-item fade-in" style="transition-delay:.3s">
+        <div class="big">130<span>+</span></div>
+        <div class="desc">畅销国家</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+  SUPPLY INTRO — 你只需做好供给端
+══════════════════════════════════════════════════════════════ -->
+<section id="supply-intro">
+  <div class="wrap">
+    <div class="supply-intro-grid">
+      <div class="supply-intro-text fade-in">
+        <div class="section-label">核心优势</div>
+        <h2 class="title-lg">你只需做好<em>供给端</em><br>我们是你的<em>销售专家</em></h2>
+        <p>你只需要做好货源、客服的事情，其它交给我们来！我们为您解决一切，让您专注于业务成长，轻松拓展市场，共创商业之巅，无忧库存管理，畅享贸易无边界！</p>
+        <div class="icon-list">
+          <div class="icon-row">
+            <div class="ico">🚀</div>
+            <div>
+              <strong>专注核心业务</strong>
+              <span>货源管理、客服服务交由您负责，其余全部由我们处理</span>
+            </div>
+          </div>
+          <div class="icon-row">
+            <div class="ico">📦</div>
+            <div>
+              <strong>无忧库存管理</strong>
+              <span>智能库存同步，实时库存共享，降低滞销风险</span>
+            </div>
+          </div>
+          <div class="icon-row">
+            <div class="ico">🌐</div>
+            <div>
+              <strong>全球市场覆盖</strong>
+              <span>覆盖 130+ 国家市场，多平台同步铺货</span>
+            </div>
+          </div>
+        </div>
+        <a href="#consult" class="btn-primary">立即拓展商机 →</a>
+      </div>
+      <div class="supply-visual fade-in" style="transition-delay:.15s">
+        <!-- Themed SVG: Supply & Sales Partnership -->
+        <svg viewBox="0 0 460 460" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;filter:drop-shadow(0 20px 40px rgba(47,4,99,0.16))">
+          <defs>
+            <linearGradient id="svBg" x1="0" y1="0" x2="460" y2="460" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#F0EBF9"/><stop offset="1" stop-color="#E4D4FF"/>
+            </linearGradient>
+            <linearGradient id="svHub" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+              <stop stop-color="#2F0463"/><stop offset="1" stop-color="#5A1A9A"/>
+            </linearGradient>
+            <linearGradient id="svAccent" x1="0" y1="0" x2="460" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2F0463"/><stop offset="1" stop-color="#7B3FBF"/>
+            </linearGradient>
+            <filter id="svShadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(47,4,99,0.12)"/></filter>
+          </defs>
+
+          <!-- Background -->
+          <rect width="460" height="460" rx="28" fill="url(#svBg)" stroke="rgba(47,4,99,0.1)" stroke-width="1.5"/>
+          <rect x="0" y="0" width="460" height="5" rx="2.5" fill="url(#svAccent)"/>
+
+          <!-- ── LEFT: 你负责 (Supplier's focus) ── -->
+          <rect x="18" y="22" width="152" height="236" rx="18" fill="white" stroke="rgba(47,4,99,0.1)" stroke-width="1.5" filter="url(#svShadow)"/>
+          <rect x="18" y="22" width="152" height="42" rx="18" fill="#F0EBF9"/>
+          <rect x="18" y="42" width="152" height="22" fill="#F0EBF9"/>
+          <text x="94" y="50" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="13" font-weight="700" fill="#2F0463">你只需负责</text>
+          <rect x="30" y="70" width="56" height="20" rx="8" fill="#EDE4FF"/>
+          <text x="58" y="84" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" font-weight="700" fill="#2F0463">供给端</text>
+
+          <rect x="28" y="100" width="132" height="44" rx="11" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="46" y="120" font-family="sans-serif" font-size="20">📦</text>
+          <text x="72" y="118" font-family="'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#1a0e2e">货源管理</text>
+          <text x="72" y="132" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">优质供应链</text>
+
+          <rect x="28" y="152" width="132" height="44" rx="11" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="46" y="172" font-family="sans-serif" font-size="20">💬</text>
+          <text x="72" y="170" font-family="'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#1a0e2e">客服服务</text>
+          <text x="72" y="184" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">用户沟通</text>
+
+          <rect x="28" y="204" width="132" height="44" rx="11" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="46" y="224" font-family="sans-serif" font-size="20">📋</text>
+          <text x="72" y="222" font-family="'Noto Sans SC',sans-serif" font-size="12" font-weight="600" fill="#1a0e2e">产品资料</text>
+          <text x="72" y="236" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">图文描述</text>
+
+          <!-- ── CENTER HUB: 北斗互联 engine ── -->
+          <circle cx="230" cy="140" r="48" fill="url(#svHub)" filter="url(#svShadow)"/>
+          <circle cx="230" cy="140" r="40" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+          <!-- Star symbol (navigation icon) -->
+          <polygon points="230,112 237,131 257,131 242,143 248,162 230,151 212,162 218,143 203,131 223,131" fill="rgba(255,255,255,0.92)"/>
+          <circle cx="230" cy="140" r="5" fill="white"/>
+          <text x="230" y="201" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="12" font-weight="700" fill="#2F0463">北斗互联</text>
+          <text x="230" y="215" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">智能对接</text>
+
+          <!-- Arrows left→center -->
+          <polygon points="173,130 180,135 173,140" fill="rgba(47,4,99,0.35)"/>
+          <polygon points="173,148 180,153 173,158" fill="rgba(47,4,99,0.35)"/>
+          <line x1="170" y1="122" x2="183" y2="135" stroke="rgba(47,4,99,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="170" y1="155" x2="183" y2="152" stroke="rgba(47,4,99,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+          <!-- Arrows center→right -->
+          <polygon points="287,108 294,113 287,118" fill="rgba(47,4,99,0.35)"/>
+          <polygon points="287,137 294,142 287,147" fill="rgba(47,4,99,0.35)"/>
+          <polygon points="287,166 294,171 287,176" fill="rgba(47,4,99,0.35)"/>
+          <line x1="278" y1="113" x2="290" y2="113" stroke="rgba(47,4,99,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="278" y1="142" x2="290" y2="142" stroke="rgba(47,4,99,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="278" y1="171" x2="290" y2="171" stroke="rgba(47,4,99,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+          <!-- ── RIGHT: 我们负责 (We handle everything) ── -->
+          <rect x="290" y="22" width="152" height="236" rx="18" fill="white" stroke="rgba(47,4,99,0.1)" stroke-width="1.5" filter="url(#svShadow)"/>
+          <rect x="290" y="22" width="152" height="42" rx="18" fill="#2F0463"/>
+          <rect x="290" y="42" width="152" height="22" fill="#2F0463"/>
+          <text x="366" y="50" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="13" font-weight="700" fill="white">我们全权负责</text>
+          <rect x="302" y="70" width="64" height="20" rx="8" fill="#EDE4FF"/>
+          <text x="334" y="84" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" font-weight="700" fill="#2F0463">全部其余</text>
+
+          <rect x="300" y="100" width="132" height="36" rx="10" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="316" y="118" font-family="sans-serif" font-size="16">🌐</text>
+          <text x="338" y="116" font-family="'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#1a0e2e">多平台铺货</text>
+          <text x="338" y="129" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">30+ 销售渠道</text>
+
+          <rect x="300" y="144" width="132" height="36" rx="10" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="316" y="162" font-family="sans-serif" font-size="16">🚚</text>
+          <text x="338" y="160" font-family="'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#1a0e2e">物流配送</text>
+          <text x="338" y="173" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">海外仓全覆盖</text>
+
+          <rect x="300" y="188" width="132" height="36" rx="10" fill="#F8F5FF" stroke="rgba(47,4,99,0.1)" stroke-width="1"/>
+          <text x="316" y="206" font-family="sans-serif" font-size="16">📊</text>
+          <text x="338" y="204" font-family="'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="#1a0e2e">营销运营</text>
+          <text x="338" y="217" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898">智能选品推广</text>
+
+          <rect x="300" y="228" width="132" height="28" rx="10" fill="#2F0463"/>
+          <text x="366" y="246" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="11" font-weight="600" fill="white">售后 · 退款 · 纠纷处理</text>
+
+          <!-- ── BOTTOM STAT CARDS ── -->
+          <rect x="18" y="276" width="200" height="88" rx="16" fill="white" stroke="rgba(47,4,99,0.1)" stroke-width="1.5" filter="url(#svShadow)"/>
+          <text x="38" y="316" font-family="'Noto Sans SC',sans-serif" font-size="32" font-weight="800" fill="#2F0463">零费用</text>
+          <text x="38" y="338" font-family="'Noto Sans SC',sans-serif" font-size="12" fill="#7a6898">完全免费入驻平台</text>
+          <text x="38" y="354" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#b8a8d0">无隐形收费</text>
+
+          <rect x="242" y="276" width="200" height="88" rx="16" fill="#2F0463" filter="url(#svShadow)"/>
+          <text x="262" y="316" font-family="sans-serif" font-size="30" font-weight="800" fill="white">50K+</text>
+          <text x="262" y="338" font-family="'Noto Sans SC',sans-serif" font-size="12" fill="rgba(255,255,255,0.8)">全球合作商家</text>
+          <text x="262" y="354" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">持续增长中</text>
+
+          <!-- ── PLATFORM CHIPS ROW ── -->
+          <rect x="18" y="382" width="424" height="58" rx="14" fill="white" stroke="rgba(47,4,99,0.08)" stroke-width="1.5"/>
+          <text x="36" y="402" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#7a6898" font-weight="600">已接入销售平台</text>
+          <rect x="34" y="410" width="48" height="20" rx="6" fill="#EDE4FF"/>
+          <text x="58" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#2F0463">Amazon</text>
+          <rect x="88" y="410" width="36" height="20" rx="6" fill="#EDE4FF"/>
+          <text x="106" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#2F0463">eBay</text>
+          <rect x="130" y="410" width="46" height="20" rx="6" fill="#F0EBF9"/>
+          <text x="153" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#7B3FBF">Shopify</text>
+          <rect x="182" y="410" width="44" height="20" rx="6" fill="#EDE4FF"/>
+          <text x="204" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#2F0463">TikTok</text>
+          <rect x="232" y="410" width="44" height="20" rx="6" fill="#EDE4FF"/>
+          <text x="254" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#2F0463">Lazada</text>
+          <rect x="282" y="410" width="44" height="20" rx="6" fill="#F0EBF9"/>
+          <text x="304" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#7B3FBF">Shopee</text>
+          <rect x="332" y="410" width="34" height="20" rx="6" fill="#EDE4FF"/>
+          <text x="349" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#2F0463">WOO</text>
+          <rect x="372" y="410" width="50" height="20" rx="6" fill="#2F0463"/>
+          <text x="397" y="424" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="white">+30 平台</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  SUPPLY CHAIN ADVANTAGE
+══════════════════════════════════════════════════════════════ -->
+<section id="supply-advantage">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="section-label">供应链</div>
+      <h2 class="section-title">供应链<em>强大优势</em>，轻松共享库存</h2>
+      <p class="section-sub">高效整合供应链资源，实现库存最优配置，助力企业快速响应市场变化。</p>
+    </div>
+    <div class="adv-cards">
+      <div class="adv-card fade-in">
+        <div class="card-icon">🏭</div>
+        <h4>整合优质供应链</h4>
+        <p>深度整合中国优质供应链资源，与数千家工厂建立直供关系，确保产品质量与价格竞争力。</p>
+      </div>
+      <div class="adv-card fade-in" style="transition-delay:.1s">
+        <div class="card-icon">📊</div>
+        <h4>智能库存同步</h4>
+        <p>系统实时监控库存动态，自动预警滞销与断货风险，帮助您在最佳时机做出采购决策。</p>
+      </div>
+      <div class="adv-card fade-in" style="transition-delay:.2s">
+        <div class="card-icon">🚢</div>
+        <h4>海外仓储配送</h4>
+        <p>整合上游供应链与海外仓储体系，提供 FBA 头程、海外仓发货、本地配送一站式物流服务。</p>
+      </div>
+      <div class="adv-card fade-in" style="transition-delay:.3s">
+        <div class="card-icon">🔗</div>
+        <h4>多平台无缝接入</h4>
+        <p>已完成 Amazon、eBay、Shopify 等数十个主流电商平台的系统对接，一键铺货效率倍增。</p>
+      </div>
+      <div class="adv-card fade-in" style="transition-delay:.4s">
+        <div class="card-icon">🛡️</div>
+        <h4>专业订单售后</h4>
+        <p>线上卖家管理系统提供 7×24 小时订单追踪与专业售后处理，降低纠纷率，提升买家好评。</p>
+      </div>
+      <div class="adv-card fade-in" style="transition-delay:.5s">
+        <div class="card-icon">💰</div>
+        <h4>完全免费服务</h4>
+        <p>平台全程零收费，无入驻费、无月租费、无服务费，致力于为每一位合作伙伴降低创业成本。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  MERCHANT + PLATFORM CONNECT
+══════════════════════════════════════════════════════════════ -->
+<section id="partners-connect">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="section-label">合作生态</div>
+      <h2 class="section-title">构建<em>全球商业联盟</em></h2>
+    </div>
+    <div class="partner-split">
+      <div class="partner-box fade-in" data-num="50K">
+        <div class="box-icon">🤝</div>
+        <h3>与全球 50,000+ 商家合作</h3>
+        <p>我们已深度合作超 50,000+ 商家，拥有广泛的全球资源网络，与世界各地的商业领袖建立了紧密的伙伴关系，共同探索新的商机。加入北斗互联，与这个庞大的全球商业联盟一同开启商业新篇章！</p>
+      </div>
+      <div class="partner-box fade-in" style="transition-delay:.15s" data-num="30+">
+        <div class="box-icon">🔌</div>
+        <h3>无缝连接数十个销售平台</h3>
+        <p>我们的供应链平台已成功集成数十个销售平台，涵盖百余家优质店铺。轻松实现一站式采购，享受多元化产品选择。无论您是供应商还是采购商，我们都能为您创造更多商机，提供全方位的支持。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  CAPABILITY & FREE
+══════════════════════════════════════════════════════════════ -->
+<section id="capability-free">
+  <div class="wrap">
+    <div class="cap-split">
+      <div class="cap-box fade-in">
+        <div class="cap-box-lhs">
+          <div class="box-eyebrow">SUPPLY CHAIN</div>
+          <div class="cap-box-icon">⚙️</div>
+          <h3>强大的供应链能力</h3>
+        </div>
+        <div class="cap-box-rhs">
+          <p>我们的平台通过线上卖家管理系统，提供专业订单 &amp; 售后处理。您只需将货物交付于我们，剩下的交给我们来做。</p>
+          <div class="cap-feature-list">
+            <div class="cap-feat"><div class="chk">✓</div><span>上游供应链深度整合</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>海外仓储一体化管理</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>专业订单 &amp; 售后系统</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>全球高效物流配送网络</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-box fade-in" style="transition-delay:.15s">
+        <div class="cap-box-lhs">
+          <div class="box-eyebrow">ZERO COST</div>
+          <div class="cap-box-icon">🎁</div>
+          <h3>不需要收取任何费用</h3>
+        </div>
+        <div class="cap-box-rhs">
+          <p>我们打造了一个全面免费的平台，旨在简化您的供应链流程，提升运营效率。无论是小型企业还是大型企业，都能享受灵活的工具和资源。</p>
+          <div class="cap-feature-list">
+            <div class="cap-feat"><div class="chk">✓</div><span>零入驻费 · 零月租费</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>零服务费 · 零隐形收费</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>优化库存管理成本</span></div>
+            <div class="cap-feat"><div class="chk">✓</div><span>可持续发展供应链体系</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  SIMPLE STEPS
+══════════════════════════════════════════════════════════════ -->
+<section id="simple-steps">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="section-label">操作流程</div>
+      <h2 class="section-title">只需<em>简单操作</em>便可立即共享你的库存</h2>
+      <p class="section-sub">在致力于简化供应链管理的道路上，我们为您提供了一套轻松操作的流程，让共享库存变得轻而易举。</p>
+    </div>
+    <div class="steps-timeline">
+      <div class="step-row fade-in">
+        <div class="step-content-left">
+          <h4>注册账户</h4>
+          <p>填写基本企业信息，快速完成账户注册，全程无需任何费用</p>
+        </div>
+        <div class="step-circle">01</div>
+        <div class="step-content-empty"></div>
+      </div>
+      <div class="step-row fade-in">
+        <div class="step-content-empty"></div>
+        <div class="step-circle">02</div>
+        <div class="step-content-right">
+          <h4>上传产品信息</h4>
+          <p>填写产品标题、规格、价格、库存等基本信息，批量导入更高效</p>
+        </div>
+      </div>
+      <div class="step-row fade-in">
+        <div class="step-content-left">
+          <h4>库存自动同步</h4>
+          <p>系统自动将您的库存信息推送至合作平台，实时更新，一目了然</p>
+        </div>
+        <div class="step-circle">03</div>
+        <div class="step-content-empty"></div>
+      </div>
+      <div class="step-row fade-in">
+        <div class="step-content-empty"></div>
+        <div class="step-circle">04</div>
+        <div class="step-content-right">
+          <h4>接单发货获利</h4>
+          <p>坐等订单到来，我们负责后续一切操作，您专注于业务扩展即可</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  ABOUT
+══════════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <div class="section-label">公司简介</div>
+        <h2 class="section-title" style="margin-bottom:28px">成立于 <em>2018</em>，专注跨境电商<em>综合服务</em></h2>
+        <p>广州北斗互联成立于 2018 年，是一家专注于跨境电商综合服务的创新型企业。我们的团队拥有十余年丰富经验，精通 Amazon、eBay、速卖通和 Wish 等平台。</p>
+        <p>我们致力于整合中国优质供应链资源，为全球电商中小企业提供一站式服务，助力其在全球市场取得成功。北斗互联为数百万第三方平台电商网店提供系统支持、产品供应、包裹配送和产品包装定制服务。</p>
+        <p>未来，北斗互联将不断扩展业务范围，包括 DTC 品牌、电商 SaaS 服务、Print on Demand、仓储服务、产品研发、人工智能及大数据挖掘和营销服务等。</p>
+        <div class="mission-vision">
+          <div class="mv-box">
+            <div class="mv-label">使命</div>
+            <p>构建云端服务生态，赋能全球电商企业</p>
+          </div>
+          <div class="mv-box">
+            <div class="mv-label">愿景</div>
+            <p>成为跨境行业最具价值的企业</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay:.15s">
+        <div class="platforms-cloud">
+          <h4>我们服务的电商平台</h4>
+          <div class="platform-tags">
+            <span class="platform-tag">Amazon</span>
+            <span class="platform-tag">eBay</span>
+            <span class="platform-tag">Shopify</span>
+            <span class="platform-tag">Ecwid</span>
+            <span class="platform-tag">WooCommerce</span>
+            <span class="platform-tag">Bigcommerce</span>
+            <span class="platform-tag">速卖通</span>
+            <span class="platform-tag">Wish</span>
+            <span class="platform-tag">TikTok Shop</span>
+            <span class="platform-tag">Etsy</span>
+            <span class="platform-tag">Shopee</span>
+            <span class="platform-tag">Lazada</span>
+            <span class="platform-tag">Walmart</span>
+            <span class="platform-tag">Newegg</span>
+          </div>
+        </div>
+        <div class="about-values" style="margin-top:32px">
+          <h4>核心价值观</h4>
+          <div class="value-list">
+            <div class="value-item">
+              <div class="vi-icon">👥</div>
+              <div>
+                <strong>客户至上</strong>
+                <span>以客户需求为导向，持续为客户创造更多商业价值</span>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="vi-icon">😊</div>
+              <div>
+                <strong>员工幸福感</strong>
+                <span>为员工提供公平公正的晋升环境，让每位有能力的人找到舞台</span>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="vi-icon">🔄</div>
+              <div>
+                <strong>持续创造价值</strong>
+                <span>不断迭代服务与产品，实现个人和公司的共同成长</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  CONSULT / FORM
+══════════════════════════════════════════════════════════════ -->
+<section id="consult">
+  <div class="wrap">
+    <div class="consult-layout">
+      <div class="consult-left fade-in">
+        <div class="section-label">联系我们</div>
+        <h2>寻找出色的<br><em style="font-style:normal;color:var(--brand)">供应链解决方案</em>吗？</h2>
+        <p style="margin-top:16px">随时与我们联系，了解更多关于北斗互联如何助力您的业务的信息。</p>
+        <div style="margin-top:36px">
+          <div class="identity-label">您的身份（可多选）</div>
+          <div class="identity-chips">
+            <div class="chip" onclick="this.classList.toggle('selected')">1688商家</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">Alibaba商家</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">AliExpress商家</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">实体工厂</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">跨境电商卖家</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">渠道商</div>
+            <div class="chip" onclick="this.classList.toggle('selected')">分销商</div>
+          </div>
+        </div>
+        <div style="margin-top:40px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--text-mid)">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📞</div>
+            <div><div style="font-weight:700;color:var(--text)">服务热线</div>020-3200-5935</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--text-mid)">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">✉️</div>
+            <div><div style="font-weight:700;color:var(--text)">邮箱咨询</div><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="37444247475845437755535f5b19565e">[email&#160;protected]</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay:.15s">
+        <div class="form-box">
+          <h3>今日与我们的团队成员进行即时交流</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>联系人 *</label>
+              <input type="text" placeholder="请输入姓名" />
+            </div>
+            <div class="form-group">
+              <label>公司名称</label>
+              <input type="text" placeholder="请输入公司名称" />
+            </div>
+            <div class="form-group">
+              <label>公司网站</label>
+              <input type="url" placeholder="https://" />
+            </div>
+            <div class="form-group">
+              <label>电话 *</label>
+              <input type="tel" placeholder="请输入联系电话" />
+            </div>
+            <div class="form-group full">
+              <label>邮箱 *</label>
+              <input type="email" placeholder="请输入邮箱地址" />
+            </div>
+            <div class="form-group full">
+              <label>主营产品</label>
+              <input type="text" placeholder="请输入主营产品类目" />
+            </div>
+            <div class="form-group">
+              <label>所属行业</label>
+              <select>
+                <option value="">请选择行业</option>
+                <option>消费电子</option>
+                <option>服装服饰</option>
+                <option>家居用品</option>
+                <option>美妆护肤</option>
+                <option>运动户外</option>
+                <option>玩具礼品</option>
+                <option>其他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>工厂规模</label>
+              <select>
+                <option value="">请选择规模</option>
+                <option>1-50人</option>
+                <option>51-200人</option>
+                <option>201-500人</option>
+                <option>500人以上</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>业务模式</label>
+              <select>
+                <option value="">请选择模式</option>
+                <option>B2B</option>
+                <option>B2C</option>
+                <option>D2C</option>
+                <option>跨境批发</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>主要市场</label>
+              <select>
+                <option value="">请选择市场</option>
+                <option>北美</option>
+                <option>欧洲</option>
+                <option>东南亚</option>
+                <option>中东</option>
+                <option>全球</option>
+              </select>
+            </div>
+          </div>
+          <button class="form-submit">提 交 咨 询</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  PARTNER LOGOS
+══════════════════════════════════════════════════════════════ -->
+<section id="partner-logos">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="section-label">合作伙伴</div>
+      <h2 class="section-title"><em>合作伙伴</em>，共筑未来</h2>
+      <p class="section-sub">携手全球知名电商和物流企业，打造一站式服务，确保每一步都高效便捷。</p>
+    </div>
+    <div class="logos-marquee-wrap">
+      <div class="logos-track">
+      <div class="logo-chip">Shopify</div>
+      <div class="logo-chip">WooCommerce</div>
+      <div class="logo-chip">Amazon</div>
+      <div class="logo-chip">eBay</div>
+      <div class="logo-chip">Allcommerce</div>
+      <div class="logo-chip">Newegg</div>
+      <div class="logo-chip">Lazada</div>
+      <div class="logo-chip">J&T 极兔速递</div>
+      <div class="logo-chip">FedEx</div>
+      <div class="logo-chip">UPS</div>
+      <div class="logo-chip">Aramex</div>
+      <div class="logo-chip">TikTok</div>
+      <div class="logo-chip">Etsy</div>
+      <div class="logo-chip">Shopee</div>
+      <div class="logo-chip">Walmart</div>
+      <div class="logo-chip">Shopify</div>
+      <div class="logo-chip">WooCommerce</div>
+      <div class="logo-chip">Amazon</div>
+      <div class="logo-chip">eBay</div>
+      <div class="logo-chip">Allcommerce</div>
+      <div class="logo-chip">Newegg</div>
+      <div class="logo-chip">Lazada</div>
+      <div class="logo-chip">J&T 极兔速递</div>
+      <div class="logo-chip">FedEx</div>
+      <div class="logo-chip">UPS</div>
+      <div class="logo-chip">Aramex</div>
+      <div class="logo-chip">TikTok</div>
+      <div class="logo-chip">Etsy</div>
+      <div class="logo-chip">Shopee</div>
+      <div class="logo-chip">Walmart</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  FOOTER
+══════════════════════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+
+      <!-- QR Code -->
+      <div class="footer-qr-center">
+        <img src="data:image/jpeg;base64,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" alt="微信二维码" />
+        <p>微信扫码关注，获取最新动态</p>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="footer-nav-row">
+        <a href="index.html">首页</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="team.html">团队风采</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="about.html">关于我们</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="contact.html">联系我们</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="careers.html">人才招聘</a>
+      </nav>
+
+      <!-- Info Row -->
+      <div class="footer-info-row">
+        <span>服务热线：020-2230-5935</span>
+        <span class="info-sep">|</span>
+        <span>邮箱账号：<a href="/cdn-cgi/l/email-protection#a8dbddd8d8c7dadce8caccc0c486c9c1"><span class="__cf_email__" data-cfemail="9cefe9ececf3eee8dcfef8f4f0b2fdf5">[email&#160;protected]</span></a></span>
+        <span class="info-sep">|</span>
+        <div class="footer-links-inline">
+          <span>友情链接：</span>
+          <a href="#">ScaleOrder</a>
+          <a href="#">Partner</a>
+          <a href="#">Shipfy</a>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-copyright">
+        <p>@2018 - 2026 广州北斗互联技术有限公司 . All Rights Reserved</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 24);
+  });
+
+  // Intersection Observer for fade-in animations
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, (entry.target.dataset.delay || 0) * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ── Mobile hamburger ──────────────────────────────────────────────────
+  (function () {
+    var btn  = document.getElementById('navHamburger');
+    var menu = document.getElementById('navMobileMenu');
+    if (!btn || !menu) return;
+
+    function close() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', '打开菜单');
+    }
+    function open() {
+      menu.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', '关闭菜单');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.contains('open') ? close() : open();
+    });
+
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', close);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) close();
+    });
+
+    // Close on resize to desktop
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) close();
+    });
+  }());
+
+
+  // ── Language toggle ───────────────────────────────────────────────────
+  (function () {
+    var toggle = document.getElementById('langToggle');
+    var thumb  = document.getElementById('langThumb');
+    if (!toggle || !thumb) return;
+
+    var opts = toggle.querySelectorAll('.lang-toggle-opt');
+    var current = 'zh';
+
+    function updateThumb(activeOpt) {
+      thumb.style.width  = activeOpt.offsetWidth + 'px';
+      var toggleRect = toggle.getBoundingClientRect();
+      var optRect    = activeOpt.getBoundingClientRect();
+      var offset = optRect.left - toggleRect.left - 3;
+      thumb.style.transform = 'translateX(' + offset + 'px)';
+    }
+
+    function setLang(lang) {
+      current = lang;
+      opts.forEach(function(opt) {
+        opt.classList.toggle('active', opt.dataset.lang === lang);
+      });
+      var activeOpt = toggle.querySelector('[data-lang="' + lang + '"]');
+      updateThumb(activeOpt);
+    }
+
+    // Init thumb position
+    window.addEventListener('load', function() {
+      setLang('zh');
+    });
+    // Fallback init on DOMContentLoaded
+    var zhOpt = toggle.querySelector('[data-lang="zh"]');
+    if (zhOpt) {
+      setTimeout(function() { updateThumb(zhOpt); }, 50);
+    }
+
+    toggle.addEventListener('click', function () {
+      var next = current === 'zh' ? 'en' : 'zh';
+      if (next === 'en') { window.location.href = 'index-en.html'; return; }
+      setLang(next);
+    });
+
+    toggle.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var next = current === 'zh' ? 'en' : 'zh';
+        if (next === 'en') { window.location.href = 'index-en.html'; return; }
+        setLang(next);
+      }
+    });
+
+    // Re-measure on resize
+    window.addEventListener('resize', function() {
+      var activeOpt = toggle.querySelector('[data-lang="' + current + '"]');
+      if (activeOpt) updateThumb(activeOpt);
+    });
+  }());
+
+</script>
+</body>
+</html>

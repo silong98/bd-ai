@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Team — Guangzhou Beidou Interconnect Technology Co., Ltd.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+
+/* ══════════════════════════════════════════════════════
+   RESET & ROOT
+══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; }
+
+:root {
+  --brand:      #2F0463;
+  --brand-mid:  #4a0c90;
+  --brand-soft: #7B3FBF;
+  --accent:     #E8472B;
+  --accent2:    #F5A623;
+  --bg:         #F9F9FB;
+  --bg-card:    #FFFFFF;
+  --bg-subtle:  #EDE8F5;
+  --text:       #1a0e2e;
+  --text-mid:   #4a3566;
+  --text-muted: #7a6898;
+  --border:     rgba(47,4,99,0.1);
+  --shadow-sm:  0 2px 12px rgba(47,4,99,0.08);
+  --shadow-md:  0 8px 32px rgba(47,4,99,0.12);
+  --shadow-lg:  0 20px 60px rgba(47,4,99,0.15);
+  --safe:       1600px;
+  --pad:        clamp(20px, 5vw, 80px);
+  --radius:     16px;
+  --radius-lg:  28px;
+}
+
+/* ─── LAYOUT ─── */
+.wrap {
+  max-width: var(--safe);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* ─── NAVBAR ─── */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+#navbar.scrolled { box-shadow: var(--shadow-md); }
+.nav-inner {
+  max-width: var(--safe); margin: 0 auto; padding: 0 var(--pad);
+  height: 76px; display: flex; align-items: center; gap: 48px;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.nav-logo svg { height: 36px; width: auto; }
+.nav-links { display: flex; gap: 36px; flex: 1; }
+.nav-links a {
+  text-decoration: none; color: var(--text-mid); font-size: 15px; font-weight: 500;
+  position: relative; padding: 4px 0; transition: color .2s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+  background: var(--brand); transition: width .25s cubic-bezier(.4,0,.2,1);
+  border-radius: 2px;
+}
+.nav-links a:hover { color: var(--brand); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--brand); }
+.nav-links a.active::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.lang-btn {
+  border: 1.5px solid var(--brand); border-radius: 8px; padding: 6px 18px;
+  font-size: 13px; font-weight: 600; color: var(--brand); cursor: pointer;
+  background: transparent; transition: all .2s; font-family: inherit; letter-spacing: .5px;
+}
+.lang-btn:hover { background: var(--brand); color: #fff; }
+
+/* ─── PAGE HERO ─── */
+#team-hero {
+  padding-top: 76px;
+  background: linear-gradient(135deg, #1a0240 0%, var(--brand) 50%, #3d0e80 100%);
+  position: relative;
+  overflow: hidden;
+}
+#team-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.team-hero-content {
+  position: relative; z-index: 1;
+  padding: 80px 0 72px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.team-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px; padding: 6px 20px; margin-bottom: 28px;
+  font-size: 13px; color: rgba(255,255,255,0.85); letter-spacing: .06em;
+  font-weight: 500;
+}
+.team-hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: inline-block; }
+.team-hero-title {
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 700; color: #fff;
+  line-height: 1.15; letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.team-hero-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(255,255,255,0.7);
+  max-width: 680px; line-height: 1.7;
+}
+/* Floating deco circles */
+.hero-deco {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.hero-deco-1 {
+  width: 400px; height: 400px; top: -100px; right: -80px;
+  background: radial-gradient(circle, rgba(123,63,191,0.25) 0%, transparent 70%);
+}
+.hero-deco-2 {
+  width: 280px; height: 280px; bottom: -60px; left: 5%;
+  background: radial-gradient(circle, rgba(232,71,43,0.15) 0%, transparent 70%);
+}
+
+/* ─── SECTION HEADERS ─── */
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brand-soft); margin-bottom: 14px;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 2px; background: var(--brand-soft); border-radius: 2px;
+}
+.section-title {
+  font-size: clamp(26px, 4vw, 42px); font-weight: 700;
+  color: var(--text); line-height: 1.2; letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+.section-desc {
+  font-size: 16px; color: var(--text-muted); line-height: 1.8;
+  max-width: 640px;
+}
+
+/* ─── COMPANY VISION (核心价值) ─── */
+#team-vision {
+  padding: 100px 0;
+  background: var(--bg);
+}
+.vision-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.vision-text-col {}
+.vision-question {
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.3; letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.vision-positioning {
+  font-size: 15px; color: var(--text-muted); line-height: 1.9;
+  padding: 20px 24px;
+  background: var(--bg-subtle); border-radius: var(--radius);
+  border-left: 3px solid var(--brand-soft);
+  margin-bottom: 40px;
+}
+.vision-cards {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.vision-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, box-shadow .2s;
+}
+.vision-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.vision-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.vision-icon.purple { background: linear-gradient(135deg, var(--brand-soft), var(--brand-mid)); }
+.vision-icon.gold { background: linear-gradient(135deg, #F5A623, #e8892a); }
+.vision-icon.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.vision-card-body {}
+.vision-card-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.vision-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* Right col: big decorative stat block */
+.vision-right {
+  position: relative;
+}
+.vision-big-card {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
+  border-radius: var(--radius-lg);
+  padding: 56px 48px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.vision-big-card::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.vision-big-card::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.vision-big-title {
+  font-size: 15px; color: rgba(255,255,255,0.6);
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+  margin-bottom: 32px;
+}
+.vision-stats { display: flex; flex-direction: column; gap: 28px; }
+.vision-stat {}
+.vision-stat-num {
+  font-size: 48px; font-weight: 700;
+  line-height: 1; letter-spacing: -.03em; color: #fff;
+}
+.vision-stat-num span { font-size: 24px; color: var(--accent2); }
+.vision-stat-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+.vision-stat-divider { height: 1px; background: rgba(255,255,255,0.1); }
+
+/* ─── MOMENTS SECTION (精彩瞬间) ─── */
+#team-moments {
+  padding: 100px 0;
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg) 100%);
+}
+.moments-header { text-align: center; margin-bottom: 72px; }
+.moments-header .section-label { justify-content: center; }
+.moments-header .section-desc { margin: 0 auto; }
+
+/* Activity grid layout */
+.moments-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: auto;
+  gap: 24px;
+}
+/* Card base */
+.moment-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+  display: flex; flex-direction: column;
+}
+.moment-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+/* Featured (card 1 & 4) spans 7 cols */
+.moment-card.featured { grid-column: span 7; }
+/* Regular spans 5 cols */
+.moment-card.regular { grid-column: span 5; }
+/* Wide spans full */
+.moment-card.wide { grid-column: span 12; flex-direction: row; }
+
+.moment-visual {
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.moment-visual img.card-photo {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.moment-card.wide .moment-visual { width: 380px; height: auto; }
+.moment-card.wide .moment-visual img.card-photo { min-height: 280px; }
+
+/* Visual placeholder with gradient + pattern */
+.moment-visual-inner {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Each card gets a unique color scheme */
+.moment-card:nth-child(1) .moment-visual-inner {
+  background: linear-gradient(135deg, #2F0463 0%, #7B3FBF 100%);
+}
+.moment-card:nth-child(2) .moment-visual-inner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+.moment-card:nth-child(3) .moment-visual-inner {
+  background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+}
+.moment-card:nth-child(4) .moment-visual-inner {
+  background: linear-gradient(135deg, #e8472b 0%, #f5a623 100%);
+}
+.moment-card:nth-child(5) .moment-visual-inner {
+  background: linear-gradient(135deg, #4a0c90 0%, #e8472b 100%);
+}
+
+.moment-visual-pattern {
+  position: absolute; inset: 0;
+  opacity: .12;
+  background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,.6) 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,.6) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.3) 1px, transparent 1px);
+  background-size: 40px 40px, 60px 60px, 80px 80px;
+}
+.moment-visual-icon {
+  font-size: 56px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.2));
+  z-index: 1;
+  margin-bottom: 12px;
+}
+.moment-visual-banner {
+  z-index: 1;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-size: 13px; color: rgba(255,255,255,0.9);
+  font-weight: 600; letter-spacing: .05em;
+  backdrop-filter: blur(4px);
+}
+.moment-year-tag {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+  border-radius: 8px; padding: 4px 12px;
+  font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 600;
+}
+
+.moment-body { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
+.moment-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--brand-soft); margin-bottom: 12px;
+}
+.moment-tag::before { content: ''; width: 16px; height: 2px; background: currentColor; border-radius: 2px; }
+.moment-title {
+  font-size: 20px; font-weight: 700; color: var(--text);
+  line-height: 1.35; letter-spacing: -.01em; margin-bottom: 12px;
+}
+.moment-card.wide .moment-title { font-size: 24px; }
+.moment-text {
+  font-size: 14px; color: var(--text-muted); line-height: 1.8; flex: 1;
+}
+.moment-card.wide .moment-text { font-size: 15px; }
+
+/* ─── FADE-IN ANIMATION ─── */
+.fade-in {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── FOOTER ─── */
+#footer {
+    background: linear-gradient(160deg, #1a0240 0%, #2F0463 60%, #3a0870 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #footer::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% -20%, rgba(123,63,191,0.35) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  #footer::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 110%, rgba(47,4,99,0.4) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .footer-inner {
+    position: relative; z-index: 1;
+    padding: 52px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .footer-qr-center {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-qr-center img {
+    width: 96px; height: 96px; border-radius: 10px; display: block;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+  .footer-qr-center p {
+    font-size: 13px; color: rgba(255,255,255,0.65);
+    text-align: center; line-height: 1.6; margin: 0;
+  }
+  .footer-nav-row {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-nav-row a {
+    font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none;
+    font-weight: 500; padding: 4px 24px; transition: color .2s;
+  }
+  .footer-nav-row a:hover { color: #fff; }
+  .footer-nav-sep { color: rgba(255,255,255,0.2); font-size: 14px; }
+  .footer-info-row {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+  }
+  .footer-info-row span, .footer-info-row a {
+    font-size: 13px; color: rgba(255,255,255,0.6); padding: 4px 16px;
+    text-decoration: none; transition: color .2s;
+  }
+  .footer-info-row a:hover { color: #fff; }
+  .footer-info-row .info-sep { color: rgba(255,255,255,0.2); padding: 0; }
+  .footer-links-inline { display: flex; align-items: center; gap: 2px; padding: 4px 16px; }
+  .footer-links-inline span { font-size: 13px; color: rgba(255,255,255,0.6); padding: 0; }
+  .footer-links-inline a {
+    font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none;
+    padding: 0 8px; transition: color .2s;
+  }
+  .footer-links-inline a:hover { color: #fff; }
+  .footer-copyright {
+    padding: 18px 0 24px; text-align: center; width: 100%;
+  }
+  .footer-copyright p {
+    font-size: 12px; color: rgba(255,255,255,0.35); margin: 0;
+  }
+
+@media (max-width: 1100px) {
+  .vision-layout { grid-template-columns: 1fr; gap: 48px; }
+  .moment-card.featured { grid-column: span 12; }
+  .moment-card.regular { grid-column: span 12; }
+  .moment-card.wide { flex-direction: column; grid-column: span 12; }
+  .moment-card.wide .moment-visual { width: 100%; height: 240px; }
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 40px 32px; }
+  .footer-cta-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .vision-big-card { padding: 36px 28px; }
+  .footer-main { grid-template-columns: 1fr; gap: 0; }
+}
+
+  /* ── LANGUAGE TOGGLE ───── */
+  .lang-toggle {
+    display: inline-flex; align-items: center;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 3px;
+    gap: 0;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  .lang-toggle-opt {
+    position: relative; z-index: 1;
+    padding: 4px 11px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted);
+    border-radius: 16px;
+    transition: color 0.22s ease;
+    letter-spacing: 0.3px;
+    line-height: 1;
+  }
+  .lang-toggle-opt.active {
+    color: #fff;
+  }
+  .lang-toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    height: calc(100% - 6px);
+    border-radius: 16px;
+    background: var(--brand);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1), width 0.15s ease;
+    z-index: 0;
+    box-shadow: 0 2px 8px rgba(47,4,99,0.25);
+  }
+  .lang-toggle:hover .lang-toggle-thumb {
+    background: var(--brand-mid);
+  }
+  .lang-toggle { padding: 2px; }
+  /* ── HAMBURGER & DRAWER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer; padding: 6px;
+    margin-left: auto; flex-shrink: 0;
+    border-radius: 8px;
+    transition: background 0.2s;
+    z-index: 1001;
+  }
+  .nav-hamburger:hover { background: var(--bg-subtle); }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--brand); border-radius: 2px;
+    transition: transform 0.28s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU DRAWER ─────────────────────────────────── */
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0 20px;
+    z-index: 1000;
+    box-shadow: 0 12px 40px rgba(47,4,99,0.13);
+    flex-direction: column;
+  }
+  .nav-mobile-menu.open { display: flex; }
+  .nav-mobile-menu a {
+    display: block;
+    padding: 14px 24px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .nav-mobile-menu a:hover { background: var(--bg-subtle); color: var(--brand); border-left-color: rgba(47,4,99,0.3); }
+  .nav-mobile-menu a.active { background: var(--bg-subtle); color: var(--brand); border-left-color: var(--brand); font-weight: 700; }
+  @media (max-width: 900px) {
+    .nav-links { gap: 20px; }
+  @media (max-width:1100px){
+    .moments-grid{grid-template-columns:1fr 1fr;} .moment-card.wide{grid-column:span 2 !important;flex-direction:column;}
+    .moment-card.wide .moment-visual{width:100%;height:220px;}
+  }
+  @media (max-width:768px){
+    .nav-links{display:none !important;} .nav-right{display:flex;margin-left:0;} .nav-hamburger{display:flex;}
+    .nav-inner{height:64px;gap:12px;padding:0 20px;} .nav-mobile-menu{top:64px;}
+    .footer-nav-row{flex-wrap:wrap;gap:8px;justify-content:center;} .footer-nav-sep{display:none;}
+    .footer-info-row{flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12px;}
+    .info-sep{display:none;} .footer-links-inline{flex-wrap:wrap;justify-content:center;gap:6px;}
+    .footer-copyright p{font-size:11px;text-align:center;}
+    .team-hero-title{font-size:clamp(26px,7vw,40px);} .team-hero-content{padding:100px 0 48px;}
+    .moments-grid{grid-template-columns:1fr;gap:16px;}
+    .moment-card,.moment-card.wide{grid-column:span 1 !important;flex-direction:column;}
+    .moment-visual{height:200px;} .moment-body{padding:20px 16px;}
+    .section-title{font-size:clamp(22px,5vw,32px);} .wrap{padding-left:16px;padding-right:16px;}
+  }
+
+
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_nav)"><path d="M31.6069 28.119C32.3056 27.7552 32.7387 27.0391 32.7387 26.2509C32.7387 25.4627 32.3056 24.7495 31.6069 24.3857L19.5815 18.1146C19.4256 18.0338 19.3245 17.8692 19.3245 17.6931C19.3245 17.517 19.4227 17.3524 19.5815 17.2715L31.6069 10.9975C32.3056 10.6338 32.7387 9.91771 32.7387 9.12949C32.7387 8.34127 32.3056 7.62812 31.6069 7.26433C31.6069 7.26433 18.2129 0.303162 18.1898 0.288725C17.8664 0.0981666 17.4998 0 17.1302 0C15.9695 0 15.0254 0.944132 15.0254 2.10481V33.2207C15.0254 34.3814 15.9695 35.3255 17.1302 35.3255C17.4045 35.3255 17.6701 35.2736 17.9242 35.1696C17.9473 35.161 31.6069 28.119 31.6069 28.119ZM19.2321 6.34618C19.2321 6.17872 19.3187 6.0257 19.4602 5.93908C19.6017 5.85246 19.7807 5.84669 19.9279 5.92464L25.2694 8.71084C25.4253 8.79169 25.5263 8.95626 25.5263 9.13238C25.5263 9.3085 25.4282 9.47308 25.2694 9.55392L19.9279 12.3401C19.8587 12.3748 19.7836 12.395 19.7085 12.395C19.6219 12.395 19.5382 12.3719 19.4631 12.3257C19.3216 12.2391 19.235 12.086 19.235 11.9186V6.34618H19.2321ZM19.2321 23.4676C19.2321 23.3001 19.3187 23.1471 19.4602 23.0605C19.6017 22.9739 19.7807 22.9681 19.9279 23.0461L25.2694 25.8323C25.4253 25.9131 25.5263 26.0777 25.5263 26.2538C25.5263 26.4299 25.4282 26.5945 25.2694 26.6753L19.9279 29.4615C19.8587 29.4962 19.7836 29.5164 19.7085 29.5164C19.6219 29.5164 19.5382 29.4933 19.4631 29.4471C19.3216 29.3605 19.235 29.2075 19.235 29.04V23.4676H19.2321Z" fill="#2F0463"/><path d="M0 10.2148C0 10.645 0.222318 11.029 0.594774 11.2455L9.96391 16.6389C10.3364 16.8526 10.7781 16.8526 11.1506 16.6389C11.523 16.4253 11.7425 16.0412 11.7425 15.611V4.82138C11.7453 4.39118 11.523 4.00718 11.1535 3.79352C10.9687 3.68669 10.7637 3.63184 10.5587 3.63184C10.3537 3.63184 10.1516 3.68381 9.9668 3.79063L0.594774 9.18691C0.222318 9.40057 0 9.78457 0 10.2148Z" fill="#2F0463"/><path d="M0 25.8056C0 26.2358 0.222318 26.6198 0.594774 26.8364L9.96391 32.2298C10.3364 32.4434 10.7781 32.4434 11.1506 32.2298C11.523 32.0161 11.7425 31.6321 11.7425 31.2019V20.4151C11.7453 19.9849 11.523 19.6009 11.1535 19.3873C10.9687 19.2804 10.7637 19.2256 10.5587 19.2256C10.3537 19.2256 10.1516 19.2776 9.9668 19.3844L0.594774 24.7749C0.222318 24.9885 0 25.3754 0 25.8056Z" fill="#2F0463"/><path d="M43.9207 3.70117L46.089 3.7849V22.7137H43.9207V19.1191C43.4962 19.3183 43.0401 19.5262 42.5608 19.7456C42.0786 19.9651 41.6109 20.1787 41.1576 20.3837C40.7043 20.5887 40.2856 20.7822 39.9016 20.9583C39.5176 21.1344 39.2144 21.273 38.9864 21.374L38.1577 19.1624C38.4262 19.0498 38.8016 18.8881 39.2837 18.6831C39.7659 18.4781 40.2798 18.2558 40.8255 18.0133C41.3712 17.7736 41.9198 17.5282 42.4742 17.2799C43.0285 17.0316 43.5078 16.8093 43.9207 16.6101V11.0579H39.0066V8.82316H43.9207V3.70117ZM57.0634 16.9941C57.0634 17.3059 57.0461 17.713 57.0115 18.2183C56.9768 18.7207 56.9306 19.1797 56.8729 19.5897C56.8007 20.1008 56.7054 20.5281 56.587 20.8774C56.4658 21.2239 56.2925 21.4982 56.0673 21.6974C55.8392 21.8966 55.5476 22.0381 55.1838 22.1218C54.8229 22.2056 54.3581 22.2489 53.7893 22.2489H51.748C51.1821 22.2489 50.7086 22.2027 50.3333 22.1103C49.9579 22.0179 49.6548 21.862 49.4295 21.6426C49.2015 21.4231 49.0427 21.1229 48.9503 20.7389C48.8579 20.3548 48.8117 19.8669 48.8117 19.2721V3.76469L50.98 3.84842V10.1859C51.7596 9.68933 52.5536 9.15808 53.362 8.58929C54.1704 8.02339 54.9009 7.4777 55.5534 6.95222L56.8296 8.90978C56.46 9.16385 56.0327 9.45835 55.5419 9.79327C55.0539 10.1253 54.54 10.4718 54.0001 10.824C53.4602 11.1792 52.9289 11.5285 52.4063 11.8779C51.8808 12.2243 51.4073 12.5333 50.98 12.8018V19.0556C50.98 19.2837 50.9944 19.4627 51.0233 19.5984C51.0522 19.7341 51.107 19.8409 51.1937 19.9189C51.2774 19.9968 51.3929 20.0488 51.5344 20.0777C51.6758 20.1065 51.8606 20.121 52.0887 20.121H53.2147C53.5121 20.121 53.746 20.1065 53.9163 20.0777C54.0867 20.0488 54.2224 19.9939 54.3206 19.9073C54.4187 19.8236 54.4938 19.7081 54.5429 19.5666C54.592 19.4252 54.6382 19.2404 54.6815 19.0123C54.7103 18.8708 54.7334 18.6716 54.7565 18.4175C54.7767 18.1634 54.7912 17.892 54.7998 17.6091C54.8056 17.3261 54.8143 17.0547 54.82 16.8006C54.8258 16.5466 54.8316 16.3531 54.8316 16.2261L57.0634 16.9912V16.9941Z" fill="#2F0463"/><path d="M72.8253 17.4615V22.9704H70.6137V17.652L59.3621 18.6741L59.2783 16.4394L70.6137 15.4173V3.67773L72.8253 3.76146V15.2036L78.057 14.7359L78.1407 16.9678L72.8224 17.4557L72.8253 17.4615ZM66.8054 14.9525C66.4791 14.6984 66.072 14.3981 65.5812 14.0603C65.0932 13.7196 64.588 13.3789 64.0712 13.0382C63.5543 12.6975 63.0433 12.3799 62.5409 12.0825C62.0385 11.7851 61.6083 11.5426 61.2532 11.3607L62.2955 9.46668C62.6795 9.6659 63.1213 9.91131 63.6236 10.2C64.126 10.4917 64.6342 10.7948 65.1452 11.1153C65.6563 11.4358 66.1413 11.7505 66.6033 12.0623C67.0652 12.3741 67.4492 12.6427 67.7611 12.8707L66.8054 14.9553V14.9525ZM68.3789 9.93152C68.0238 9.64857 67.5965 9.32809 67.0912 8.97584C66.5888 8.62071 66.0749 8.27135 65.5494 7.922C65.024 7.57553 64.5245 7.25215 64.0509 6.95477C63.5746 6.65738 63.1819 6.42351 62.8701 6.25316L63.9124 4.35913C64.2675 4.54391 64.689 4.78066 65.177 5.07228C65.6649 5.36389 66.1702 5.67283 66.687 5.9962C67.2038 6.32246 67.7033 6.65161 68.1855 6.98653C68.6677 7.31856 69.0863 7.61306 69.4414 7.87003L68.3789 9.93441V9.93152Z" fill="#2F0463"/><path d="M99.0704 20.0343V22.0756H80.1416V20.0343H92.883L93.1169 17.1413H83.1617L84.7987 6.93196H81.2041V4.82715H98.0714V6.93196H87.0104L86.586 9.48429H95.88L95.1351 20.0343H99.0704ZM93.2844 15.0798L93.5818 11.592H86.2452L85.6707 15.0798H93.2844Z" fill="#2F0463"/><path d="M114.852 14.9728C115.262 16.3212 115.915 17.5338 116.81 18.6108C117.702 19.6877 118.767 20.525 120 21.1198L118.894 23.0774C117.872 22.5374 116.934 21.8041 116.076 20.8773C115.219 19.9476 114.534 18.9313 114.023 17.8254C113.57 18.8331 112.955 19.7715 112.184 20.6434C111.41 21.5154 110.437 22.3555 109.259 23.164L108.174 21.6337V22.9099H106.303V19.8696C105.422 20.0111 104.55 20.1439 103.687 20.2623C102.821 20.3836 101.943 20.4933 101.051 20.5914L100.901 18.5501C101.141 18.5213 101.374 18.4924 101.602 18.4664C101.831 18.4375 102.064 18.4087 102.304 18.3827V6.69797H101.389V4.78372H109.28V6.69797H108.174V17.5021L109.534 17.248L109.577 19.2893L108.174 19.5434V21.244C109.548 20.4067 110.605 19.4856 111.344 18.478C112.08 17.4703 112.557 16.301 112.77 14.97H108.815V12.8854H112.921V9.75846H109.326V7.73738H111.601C111.488 7.46887 111.356 7.17726 111.208 6.86543C111.058 6.55361 110.902 6.24467 110.741 5.94151C110.576 5.63546 110.409 5.34385 110.23 5.05801C110.053 4.77506 109.877 4.5181 109.707 4.29289L111.324 3.35742C111.693 3.89734 112.046 4.45169 112.386 5.02625C112.727 5.60082 113.03 6.13496 113.302 6.63157L111.835 7.73738H114.133C114.347 7.42556 114.56 7.08198 114.783 6.70664C115.002 6.33129 115.219 5.95018 115.432 5.56906C115.646 5.18794 115.842 4.80682 116.027 4.43148C116.212 4.05614 116.368 3.71833 116.495 3.42094L118.302 4.3131C118.204 4.51232 118.086 4.74619 117.95 5.01471C117.814 5.28322 117.664 5.57194 117.494 5.87511C117.324 6.18116 117.147 6.49298 116.963 6.81058C116.778 7.12817 116.593 7.43711 116.408 7.7345H118.981V9.75557H114.939V12.8825H119.385V14.9671H114.855L114.852 14.9728ZM104.068 6.69797V9.23009H106.303V6.69797H104.068ZM104.068 13.5263H106.303V11.0577H104.068V13.5263ZM104.068 18.143C104.438 18.0853 104.81 18.0333 105.186 17.9842C105.561 17.9352 105.933 17.8745 106.303 17.8023V15.3771H104.068V18.143Z" fill="#2F0463"/></g><defs><clipPath id="clip0_nav"><rect width="120" height="35.3255" fill="white"/></clipPath></defs></svg>
+    </a>
+    <nav class="nav-links">
+      <a href="index-en.html">Home</a>
+      <a href="team-en.html" class="active">Our Team</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="careers-en.html">Careers</a>
+    </nav>
+  <div class="nav-mobile-menu" id="navMobileMenu">
+      <a href="index-en.html">Home</a>
+      <a href="team-en.html" class="active">Our Team</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="careers-en.html">Careers</a>
+  </div>
+    <div class="nav-right">
+      <div class="lang-toggle" id="langToggle" role="switch" aria-label="Language Switch" tabindex="0">
+        <div class="lang-toggle-thumb" id="langThumb"></div>
+        <span class="lang-toggle-opt" data-lang="zh">ZH</span>
+        <span class="lang-toggle-opt active" data-lang="en">EN</span>
+      </div>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+  HERO
+══════════════════════════════════════════════════════════════ -->
+<section id="team-hero">
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <div class="wrap">
+    <div class="team-hero-content fade-in">
+      <div class="team-hero-badge">
+        <span></span>
+        TEAM &amp; CULTURE
+      </div>
+      <h1 class="team-hero-title">Our Team</h1>
+      <p class="team-hero-sub">A group of passionate and talented people writing the story of Beidou Interconnect together — every smile, every journey, is our most treasured asset.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  VISION
+══════════════════════════════════════════════════════════════ -->
+<section id="team-vision">
+  <div class="wrap">
+    <div class="vision-layout">
+      <div class="vision-text-col fade-in">
+        <div class="section-label">Company Vision</div>
+        <h2 class="vision-question">What kind of company<br>do we want to be?</h2>
+        <p class="vision-positioning">A small but excellent lean company dedicated to delivering world-class products, seven-star customer service, and a workplace where every employee thrives.</p>
+        <div class="vision-cards">
+          <div class="vision-card fade-in">
+            <div class="vision-icon purple">①</div>
+            <div class="vision-card-body">
+              <div class="vision-card-title">World-Class Products</div>
+              <div class="vision-card-desc">Crafting every detail with the utmost dedication, setting the benchmark for the cross-border e-commerce industry.</div>
+            </div>
+          </div>
+          <div class="vision-card fade-in">
+            <div class="vision-icon gold">☆</div>
+            <div class="vision-card-body">
+              <div class="vision-card-title">Seven-Star Customer Service</div>
+              <div class="vision-card-desc">Exceeding expectations, making every partner feel an unprecedented level of care and professionalism.</div>
+            </div>
+          </div>
+          <div class="vision-card fade-in">
+            <div class="vision-icon green">福</div>
+            <div class="vision-card-body">
+              <div class="vision-card-title">A Happy Workforce</div>
+              <div class="vision-card-desc">Valuing every team member — where hard work is recognized and talent gets to shine.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vision-right fade-in">
+        <div class="vision-big-card">
+          <div class="vision-big-title">Team Achievements</div>
+          <div class="vision-stats">
+            <div class="vision-stat">
+              <div class="vision-stat-num">50<span>K+</span></div>
+              <div class="vision-stat-label">Global Partner Merchants</div>
+            </div>
+            <div class="vision-stat-divider"></div>
+            <div class="vision-stat">
+              <div class="vision-stat-num">130<span>+</span></div>
+              <div class="vision-stat-label">Countries &amp; Regions Covered</div>
+            </div>
+            <div class="vision-stat-divider"></div>
+            <div class="vision-stat">
+              <div class="vision-stat-num">20<span>M+</span></div>
+              <div class="vision-stat-label">Cumulative Orders Processed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+  MOMENTS
+══════════════════════════════════════════════════════════════ -->
+<section id="team-moments">
+  <div class="wrap">
+    <div class="moments-header fade-in">
+      <div class="section-label">Highlights</div>
+      <h2 class="section-title">Our Story</h2>
+      <p class="section-desc">Our team's success comes from the passion and talent of every member. Join us and experience the energy and cohesion of our team — where every unique perspective brings new momentum. Your ideas will be valued, your efforts will be recognized, and together we'll stride toward a brilliant future!</p>
+    </div>
+
+    <div class="moments-grid">
+
+      <!-- Card 1: Spring 2024 Team Building (featured) -->
+      <div class="moment-card featured fade-in">
+        <div class="moment-visual">
+          <img class="card-photo" src="https://www.scaleorder.fr/coweb/img/image_1.png" alt="Spring 2024 Team Building">
+          <div class="moment-year-tag">2024</div>
+        </div>
+        <div class="moment-body">
+          <div class="moment-tag">Team Building</div>
+          <h3 class="moment-title">Spring 2024 Team Building Event</h3>
+          <p class="moment-text">On a day graced by the spring breeze, the company successfully held its Spring 2024 Team Building event. The activities included a variety of challenging team games and vibrant outdoor activities designed to strengthen collaboration and team spirit. Every smiling face and every captured moment in these photos is a testament to our collective effort and the deep bonds we've built together.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: BMW Award (regular) -->
+      <div class="moment-card regular fade-in">
+        <div class="moment-visual">
+          <img class="card-photo" src="https://www.scaleorder.fr/coweb/img/image_2.png" alt="BMW Award for Outstanding Contribution">
+          <div class="moment-year-tag">2024</div>
+        </div>
+        <div class="moment-body">
+          <div class="moment-tag">Employee Recognition</div>
+          <h3 class="moment-title">Recognizing Excellence — Awarded a BMW</h3>
+          <p class="moment-text">To honour the outstanding contributions and unwavering dedication of our exceptional employees, the company held a grand awards ceremony. The persistence and commitment of our top performers were met with the highest recognition. Let us salute these remarkable individuals and inspire every team member to keep pursuing excellence, writing an even more brilliant tomorrow together!</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Overseas Clients Visit (wide) -->
+      <div class="moment-card wide fade-in">
+        <div class="moment-visual">
+          <img class="card-photo" src="https://www.scaleorder.fr/coweb/img/image_3.png" alt="Overseas Clients Visit">
+          <div class="moment-year-tag">2024</div>
+        </div>
+        <div class="moment-body">
+          <div class="moment-tag">International Exchange</div>
+          <h3 class="moment-title">Overseas Clients Visit — Exploring New Partnerships</h3>
+          <p class="moment-text">We were honoured to welcome overseas clients from around the world to visit our company and explore cooperation opportunities. During this special visit, we not only showcased our innovative products and professional services, but more importantly, built bridges for cross-border exchange and collaboration. The photos capture every moment of discussion between our clients and our team, reflecting our determination and progress in expanding global partnerships. Let's work side by side to open a new chapter of cooperation and inject fresh energy into our international journey!</p>
+        </div>
+      </div>
+
+      <!-- Card 4: 2023 Annual Gathering (regular) -->
+      <div class="moment-card regular fade-in">
+        <div class="moment-visual">
+          <img class="card-photo" src="https://www.scaleorder.fr/coweb/img/image_4.png" alt="2023 Annual Gathering & Team Building">
+          <div class="moment-year-tag">2023</div>
+        </div>
+        <div class="moment-body">
+          <div class="moment-tag">Annual Gathering</div>
+          <h3 class="moment-title">2023 Annual Gathering &amp; Team Building</h3>
+          <p class="moment-text">In 2023, we not only celebrated past achievements but also explored infinite possibilities for the future together! In this gathering filled with passion and innovation, exciting team games and thought-provoking creative workshops led us on a journey toward success, energising every member for the road ahead.</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Monthly Birthday Celebration (featured) -->
+      <div class="moment-card featured fade-in">
+        <div class="moment-visual">
+          <img class="card-photo" src="https://www.scaleorder.fr/coweb/img/image_5.png" alt="Monthly Birthday Celebration">
+        </div>
+        <div class="moment-body">
+          <div class="moment-tag">Employee Care</div>
+          <h3 class="moment-title">Monthly Birthday Celebrations</h3>
+          <p class="moment-text">Every month, we host a heartwarming birthday celebration for our team members whose birthdays fall that month. It's a moment filled with laughter and sweetness — we gather to share cake, light candles, and wish everyone a happy birthday! These celebrations are a testament to the unity and warmth of our big family. May every month bring us joy and blessings!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+
+      <!-- QR Code -->
+      <div class="footer-qr-center">
+        <img src="https://www.scaleorder.fr/coweb/img/image_6.jpg" alt="WeChat QR Code" />
+        <p>Scan the QR code to follow us on WeChat for the latest updates</p>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="footer-nav-row">
+        <a href="index-en.html">Home</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="team-en.html">Our Team</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="about.html">About Us</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="contact.html">Contact</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="careers-en.html">Careers</a>
+      </nav>
+
+      <!-- Info Row -->
+      <div class="footer-info-row">
+        <span>Hotline: 020-2230-5935</span>
+        <span class="info-sep">|</span>
+        <span>Email: <a href="/cdn-cgi/l/email-protection#a8dbddd8d8c7dadce8caccc0c486c9c1"><span class="__cf_email__" data-cfemail="9cefe9ececf3eee8dcfef8f4f0b2fdf5">[email&#160;protected]</span>
+        <span class="info-sep">|</span>
+        <div class="footer-links-inline">
+          <span>Partners: </span>
+          <a href="#">ScaleOrder</a>
+          <a href="#">Partner</a>
+          <a href="#">Shipfy</a>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-copyright">
+        <p>@2018 - 2026 Guangzhou Beidou Interconnect Technology Co., Ltd. All Rights Reserved</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, (entry.target.dataset.delay || 0) * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Mobile hamburger ──────────────────────────────────────────────────
+  (function () {
+    var btn  = document.getElementById('navHamburger');
+    var menu = document.getElementById('navMobileMenu');
+    if (!btn || !menu) return;
+
+    function close() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open menu');
+    }
+    function open() {
+      menu.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', 'Close menu');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.contains('open') ? close() : open();
+    });
+
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', close);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) close();
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) close();
+    });
+  }());
+
+  // ── Language toggle ───────────────────────────────────────────────────
+  (function () {
+    var toggle = document.getElementById('langToggle');
+    var thumb  = document.getElementById('langThumb');
+    if (!toggle || !thumb) return;
+
+    var opts = toggle.querySelectorAll('.lang-toggle-opt');
+    var current = 'en';
+
+    function updateThumb(activeOpt) {
+      thumb.style.width  = activeOpt.offsetWidth + 'px';
+      var toggleRect = toggle.getBoundingClientRect();
+      var optRect    = activeOpt.getBoundingClientRect();
+      var offset = optRect.left - toggleRect.left - 3;
+      thumb.style.transform = 'translateX(' + offset + 'px)';
+    }
+
+    function setLang(lang) {
+      current = lang;
+      opts.forEach(function(opt) {
+        opt.classList.toggle('active', opt.dataset.lang === lang);
+      });
+      var activeOpt = toggle.querySelector('[data-lang="' + lang + '"]');
+      updateThumb(activeOpt);
+    }
+
+    window.addEventListener('load', function() {
+      setLang('en');
+    });
+    var enOpt = toggle.querySelector('[data-lang="en"]');
+    if (enOpt) {
+      setTimeout(function() { updateThumb(enOpt); }, 50);
+    }
+
+    toggle.addEventListener('click', function () {
+      var next = current === 'en' ? 'zh' : 'en';
+      if (next === 'zh') { window.location.href = 'team.html'; return; }
+      setLang(next);
+    });
+
+    toggle.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var next = current === 'en' ? 'zh' : 'en';
+        if (next === 'zh') { window.location.href = 'team.html'; return; }
+        setLang(next);
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      var activeOpt = toggle.querySelector('[data-lang="' + current + '"]');
+      if (activeOpt) updateThumb(activeOpt);
+    });
+  }());
+</script>
+</body>
+</html>
